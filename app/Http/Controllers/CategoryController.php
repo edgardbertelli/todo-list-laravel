@@ -47,17 +47,17 @@ class CategoryController extends Controller
     {
         $this->categories->store($request);
 
-        return redirect()->route('categories.index');
+        return redirect()->action([CategoryController::class, 'index']);
     }
 
     /**
      * Display the specified category.
      * 
-     * @param string $category
+     * @param string $slug
      */
-    public function show(Request $request, string $category): View
+    public function show(Request $request, string $slug): View
     {
-        $category = $this->categories->show($category);
+        $category = $this->categories->show($slug);
 
         return view('categories.show', [
             'category' => $category,
@@ -69,11 +69,11 @@ class CategoryController extends Controller
      * Show the form for editing the specified category.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $category
+     * @param  string  $slug
      */
-    public function edit(Request $request, string $category): View
+    public function edit(Request $request, string $slug): View
     {
-        $category = $this->categories->show($category);
+        $category = $this->categories->show($slug);
 
         return view('categories.edit', [
             'category' => $category,
@@ -85,15 +85,18 @@ class CategoryController extends Controller
      * Update the specified category in storage.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $category
+     * @param  string  $slug
      */
-    public function update(Request $request, string $category): RedirectResponse
+    public function update(Request $request, string $slug): RedirectResponse
     {
-        $category = $this->categories->update($request, $category);
+        $updatedCategory = $this->categories->update($request, $slug);
 
-        return redirect()->route('categories.show', [
-            'category' => $category
-        ]);
+        return redirect()->action(
+            [CategoryController::class, 'show'], [
+                'request' => $request,
+                'slug' => $updatedCategory->slug
+                ]
+        );
     }
 
     /**
@@ -105,10 +108,6 @@ class CategoryController extends Controller
     {
         $this->categories->destroy($category);
 
-        $categories = $this->categories->index();
-
-        return redirect()->route('categories.index', [
-            'categories' => $categories
-        ]);
+        return redirect()->action([CategoryController::class, 'index']);
     }
 }

@@ -53,4 +53,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Category::class);
     }
+
+    /**
+     * Get all of the checklists for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function checklists()
+    {
+        return $this->hasManyThrough(Checklist::class, Category::class);
+    }
 }

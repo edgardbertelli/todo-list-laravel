@@ -5,23 +5,23 @@
         </h2>
     </x-slot>
 
-    <a href="{{ route('categories.create') }}">
+    <a href="{{ route('checklists.create') }}">
         <x-primary-button type="button">
-            {{ __('Create category') }}
+            {{ __('Create checklist') }}
         </x-primary-button>
     </a>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
         <div class="p-6 text-gray-900">
-            @forelse ($categories as $category)
-            <a href="{{ route('categories.show', $category->slug) }}">
+            @forelse ($checklists as $checklist)
+            <a href="{{ route('checklists.show', $checklist->slug) }}">
                 <x-card>
-                    {{ $category->name }}
+                    {{ $checklist->name }}
                 </x-card>
             </a>
             @empty
             <x-alert>
-                <p>I'm sorry, {{ Auth::user()->name }}. You don't have any categories registered yet.<br>
-                    But go ahead and <b><a href="{{ route('categories.create') }}">click here</a></b> to create a new one
+                <p>I'm sorry, {{ Auth::user()->name }}. You don't have any checklists registered yet.<br>
+                    But go ahead and <b><a href="{{ route('checklists.create') }}">click here</a></b> to create a new one
                     right now.
                 </p>
             </x-alert>

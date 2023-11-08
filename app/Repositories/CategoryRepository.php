@@ -3,27 +3,26 @@
 namespace App\Repositories;
 
 use App\Contracts\CategoryContract;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryRepository implements CategoryContract
 {
     /**
-     * Instantiates the categories' model.
-     * 
-     * @return void
-     */
-    public function __construct(
-        private Category $categories,
-    ) {}
-
-    /**
      * Lists user's registered categories.
+     * 
+     * @return \Illuminate\Support\Facades\DB
      */
     public function index()
     {
-        return $this->categories::all();
+        $categories = DB::table('categories')
+                        ->where('user_id', Auth::user()->id)
+                        ->orderBy('name')
+                        ->get();
+
+        return $categories;
     }
 
     /**
@@ -34,54 +33,66 @@ class CategoryRepository implements CategoryContract
      */
     public function store(Request $request)
     {
-        return $this->categories::create([
-            'name' => $request->name,
+        $category = DB::table('categories')->insert([
+            'name' => $request->input('name'),
+            'slug' => Str::slug($request->input('name')),
             'user_id' => Auth::user()->id,
+            'created_at' => now(),
         ]);
+
+        return $category;
     }
 
     /**
      * Returns a category.
      * 
-     * @param string $category
+     * @param string $slug
      */
-    public function show(string $category)
+    public function show(string $slug)
     {
-        return $this->categories::where('name', $category)
-                                ->where('user_id', Auth::user()->id)
-                                ->first();
+        $category = DB::table('categories')
+                      ->where('slug', $slug)
+                      ->where('user_id', Auth::user()->id)
+                      ->first();
+
+        return $category;
     }
 
     /**
      * Updates a category.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $category
+     * @param  string  $slug
      */
-    public function update(Request $request, string $category)
+    public function update(Request $request, string $slug)
     {
-        $category = $this->categories::where('name', $category)
-                                     ->where('user_id', Auth::user()->id)
-                                     ->first();
+        DB::table('categories')
+           ->where('slug', $slug)
+           ->where('user_id', Auth::user()->id)
+           ->update([
+                'name' => $request->input('name'),
+                'slug' => Str::slug($request->input('name')),
+                'updated_at' => now()
+           ]);
 
-        $category->update([
-            'name' => $request->name
-        ]);
+        $category = DB::table('categories')
+                       ->where('slug', Str::slug($request->input('name')))
+                       ->where('user_id', Auth::user()->id)
+                       ->first();
 
-        return $category->fresh();
+        return $category;
     }
 
     /**
      * Removes a category.
      * 
-     * @param string $category
+     * @param string $slug
      */
-    public function destroy(string $category)
+    public function destroy(string $slug)
     {
-        $category = $this->categories::where('name', $category)
-                                      ->where('user_id', Auth::user()->id)
-                                      ->first();
-
-        return $category->delete();
+        return DB::table('categories')
+                 ->where('slug', $slug)
+                 ->where('user_id', Auth::user()->id)
+                 ->delete();
     }
 }

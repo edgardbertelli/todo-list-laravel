@@ -31,12 +31,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-Route::get('/categories/{category:name}', [CategoryController::class, 'show'])->name('categories.show');
-Route::get('/categories/{category:name}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-Route::put('/categories/{category:name}', [CategoryController::class, 'update'])->name('categories.update');
-Route::delete('/categories/{category:name}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+Route::controller(CategoryController::class)->prefix('/categories')->name('categories.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/','store')->name('store');
+    Route::get('/{slug}', 'show')->name('show');
+    Route::get('/{slug}/edit', 'edit')->name('edit');
+    Route::put('/{slug}', 'update')->name('update');
+    Route::delete('/{slug}', 'destroy')->name('destroy');
+});
+
+Route::controller(ChecklistController::class)->prefix('/checklists')->name('checklists.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{slug}', 'show')->name('show');
+    Route::get('/{slug}/edit', 'edit')->name('edit');
+    Route::put('/{slug}', 'update')->name('update');
+    Route::delete('/slug', 'destroy')->name('destroy');
+});
+
 
 require __DIR__ . '/auth.php';

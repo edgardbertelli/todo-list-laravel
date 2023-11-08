@@ -8,7 +8,7 @@ interface CategoryContract
 {
     public function index();
     public function store(Request $request);
-    public function show(string $category);
-    public function update(Request $request, string $category);
-    public function destroy(string $category);
+    public function show(string $slug);
+    public function update(Request $request, string $slug);
+    public function destroy(string $slug);
 }

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Contracts\CategoryContract;
+use App\Contracts\ChecklistContract;
+use App\Repositories\ChecklistRepository;
 use App\Repositories\CategoryRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,5 +24,6 @@ class RepositoryServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->bind(CategoryContract::class, CategoryRepository::class);
+        $this->app->bind(ChecklistContract::class, ChecklistRepository::class);
     }
 }

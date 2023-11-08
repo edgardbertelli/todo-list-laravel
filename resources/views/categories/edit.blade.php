@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-card>
                 <div class="p-6 text-gray-900">
-                    <x-forms.form action="{{ route('categories.update', $category->name) }}"
+                    <x-forms.form action="{{ route('categories.update', $category->slug) }}"
                                   method="POST"
                                   request_path="update">
                         <x-forms.input id="name" 

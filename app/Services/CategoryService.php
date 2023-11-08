@@ -37,31 +37,31 @@ class CategoryService
     /**
      * Returns a category.
      * 
-     * @param string $category
+     * @param string $slug
      */
-    public function show(string $category)
+    public function show(string $slug)
     {
-        return $this->categories->show($category);
+        return $this->categories->show($slug);
     }
 
     /**
      * Updates a category.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $category
+     * @param  string  $slug
      */
-    public function update(Request $request, string $category)
+    public function update(Request $request, string $slug)
     {
-        return $this->categories->update($request, $category);
+        return $this->categories->update($request, $slug);
     }
 
     /**
      * Removes a category.
      * 
-     * @param string $category
+     * @param string $slug
      */
-    public function destroy(string $category)
+    public function destroy(string $slug)
     {
-        return $this->categories->destroy($category);
+        return $this->categories->destroy($slug);
     }
 }
