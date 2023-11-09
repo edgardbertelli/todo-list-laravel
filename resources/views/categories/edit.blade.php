@@ -16,7 +16,8 @@
                                     name="name" 
                                     label="Name" 
                                     type="text"
-                                    value="{{ $category->name }}" />
+                                    value="{{ $category->name }}"
+                                    required />
                         <div class="mt-4">
                             <x-primary-button>
                                 {{ __('Update') }}

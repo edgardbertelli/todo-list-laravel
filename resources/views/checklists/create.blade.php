@@ -10,10 +10,10 @@
             <x-card>
                 <div class="p-6 text-gray-900">
                     <x-forms.form action="{{ route('checklists.store') }}" method="POST" request_path="">
-                        <x-forms.input id="name" name="name" label="Name" type="text" value="" />
+                        <x-forms.input id="name" name="name" label="Name" type="text" value="" required />
                         <div class="mt-4">
                             <label for="category">Categoria</label>
-                            <select name="category_id" id="category">
+                            <select name="category_id" id="category" required>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach

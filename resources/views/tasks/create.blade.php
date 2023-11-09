@@ -14,7 +14,8 @@
                                        name="title"
                                        label="Title"
                                        type="text"
-                                       value="" />
+                                       value=""
+                                       required />
                         
                         <x-forms.textarea id="description"
                                           name="description"
@@ -23,7 +24,7 @@
                                           cols="50"></x-forms.textarea>
 
                         <label for="checklist">Checklist</label>
-                        <select name="checklist_id" id="checklist">
+                        <select name="checklist_id" id="checklist" required >
                             @foreach ($checklists as $checklist)
                                 <option value="{{ $checklist->id }}">{{ $checklist->name }}</option>
                             @endforeach

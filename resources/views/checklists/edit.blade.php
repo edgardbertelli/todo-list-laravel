@@ -10,10 +10,10 @@
             <x-card>
                 <div class="p-6 text-gray-900">
                     <x-forms.form action="{{ route('checklists.update', $checklist->slug) }}" method="POST" request_path="update">
-                        <x-forms.input id="name" name="name" label="Name" type="text" value="{{ $checklist->name }}" />
+                        <x-forms.input id="name" name="name" label="Name" type="text" value="{{ $checklist->name }}" required />
                         <div class="mt-4">
                             <label for="category">{{ __('Category') }}</label>
-                            <select name="category_id" id="category">
+                            <select name="category_id" id="category" required>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" @selected($checklist->category_name == $category->name)>{{ $category->name }}</option>
                                 @endforeach
