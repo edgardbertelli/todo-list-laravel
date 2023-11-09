@@ -16,12 +16,16 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         {{ __('Categories') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('checklists.index')" :active="request()->routeIs('checklists.index')">
+                    <x-nav-link :href="route('checklists.index')" :active="request()->routeIs('checklists.*')">
                         {{ __('Checklists') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
+                        {{ __('Tasks') }}
                     </x-nav-link>
                 </div>
             </div>

@@ -18,7 +18,7 @@ class ChecklistRepository implements ChecklistContract
         $checklists = DB::table('checklists')
                          ->join('categories', 'checklists.category_id', '=', 'categories.id')
                          ->join('users', 'categories.user_id', '=', 'users.id')
-                         ->select(['checklists.name', 'checklists.slug'])
+                         ->select(['checklists.*'])
                          ->where('categories.user_id', '=', Auth::user()->id)
                          ->get();
 

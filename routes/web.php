@@ -51,5 +51,15 @@ Route::controller(ChecklistController::class)->prefix('/checklists')->name('chec
     Route::delete('/slug', 'destroy')->name('destroy');
 });
 
+Route::controller(TaskController::class)->prefix('/tasks')->name('tasks.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/{slug}', 'show')->name('show');
+    Route::get('/{slug}/edit', 'edit')->name('edit');
+    Route::put('/{slug}', 'update')->name('update');
+    Route::delete('/{slug}', 'destroy')->name('destroy');
+});
+
 
 require __DIR__ . '/auth.php';
