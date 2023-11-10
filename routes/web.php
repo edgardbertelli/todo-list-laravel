@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+/**
+ * The categories routes.
+ */
 Route::controller(CategoryController::class)
       ->prefix('/categories')
       ->name('categories.')
@@ -44,6 +47,9 @@ Route::controller(CategoryController::class)
             Route::delete('/{slug}', 'destroy')->name('destroy');
 });
 
+/**
+ * The checklists routes.
+ */
 Route::controller(ChecklistController::class)
       ->prefix('/checklists')
       ->name('checklists.')
@@ -57,6 +63,9 @@ Route::controller(ChecklistController::class)
             Route::delete('/slug', 'destroy')->name('destroy');
 });
 
+/**
+ * The tasks routes.
+ */
 Route::controller(TaskController::class)
       ->prefix('/tasks')
       ->name('tasks.')
