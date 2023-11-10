@@ -1,0 +1,1 @@
+<x-input-label for="{{ $for }}"  />

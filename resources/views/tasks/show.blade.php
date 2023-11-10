@@ -1,9 +1,6 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tasks') }}
-        </h2>
-    </x-slot>
+   
+    @include('tasks.header')
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -21,7 +18,7 @@
                         {{ __('Edit') }}
                     </x-primary-button>
                 </a>
-                <x-forms.form action="{{ route('tasks.destroy', $task->slug) }}" method="POST" request_path="destroy">
+                <x-forms.form action="{{ route('tasks.destroy', $task->slug) }}" method="POST" request_path="{{ Route::currentRouteName() }}">
                     <x-danger-button>
                         {{ __('Remove') }}
                     </x-danger-button>
