@@ -8,11 +8,20 @@
                 <div class="p-6 text-gray-900">
                     <x-forms.form action="{{ route('categories.update', $category->slug) }}"
                                   method="POST"
-                                  request_path="{{ Route::currentRouteName() }}">
+                                  request_path="{{ Route::currentRouteName() }}"
+                                  novalidate>
 
                         <x-input-label for="name" value="Name" />
 
-                        <x-text-input id="name" name="name" :value="$category->name" required />
+                        <x-text-input id="name" 
+                                      name="name"
+                                      type="text"
+                                      class="@error('name') is-invalid @enderror"
+                                      :value="$category->name"
+                                      required />
+                        @error('name')
+                            <div class="text-red-400">{{ $message }}</div>
+                        @enderror
 
                         <div class="mt-4">
                             <x-primary-button>
