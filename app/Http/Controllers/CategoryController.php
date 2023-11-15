@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Services\CategoryService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -43,11 +44,11 @@ class CategoryController extends Controller
      * 
      * @param \Illuminate\Http\Request $request
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
         $this->categories->store($request);
 
-        return redirect()->action([CategoryController::class, 'index']);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -55,13 +56,12 @@ class CategoryController extends Controller
      * 
      * @param string $slug
      */
-    public function show(Request $request, string $slug): View
+    public function show(string $slug): View
     {
         $category = $this->categories->show($slug);
 
         return view('categories.show', [
-            'category' => $category,
-            'request'  => $request,
+            'category' => $category
         ]);
     }
 
@@ -71,23 +71,22 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $slug
      */
-    public function edit(Request $request, string $slug): View
+    public function edit(string $slug): View
     {
         $category = $this->categories->show($slug);
 
         return view('categories.edit', [
-            'category' => $category,
-            'request'  => $request,
+            'category' => $category
         ]);
     }
 
     /**
      * Update the specified category in storage.
      * 
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateCategoryRequest  $request
      * @param  string  $slug
      */
-    public function update(Request $request, string $slug): RedirectResponse
+    public function update(UpdateCategoryRequest $request, string $slug): RedirectResponse
     {
         $updatedCategory = $this->categories->update($request, $slug);
 
@@ -108,6 +107,6 @@ class CategoryController extends Controller
     {
         $this->categories->destroy($category);
 
-        return redirect()->action([CategoryController::class, 'index']);
+        return redirect()->route('categories.index');
     }
 }
