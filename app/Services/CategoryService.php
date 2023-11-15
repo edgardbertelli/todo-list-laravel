@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Contracts\CategoryContract;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService
 {
@@ -22,7 +22,7 @@ class CategoryService
     /**
      * Lists all the categories.
      * 
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(): Collection
     {
@@ -33,9 +33,9 @@ class CategoryService
      * Creates a new category.
      * 
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
-     * @return \App\Contracts\CategoryContract
+     * @return \App\Models\Category
      */
-    public function store(StoreCategoryRequest $request): CategoryContract
+    public function store(StoreCategoryRequest $request): Category
     {
         $validated = $request->safe()->only(['name']);
     
@@ -46,9 +46,9 @@ class CategoryService
      * Returns a category.
      * 
      * @param  string  $slug
-     * @return App\Contracts\CategoryContract
+     * @return \App\Models\Category
      */
-    public function show(string $slug): CategoryContract
+    public function show(string $slug): Category
     {
         return $this->categories->show($slug);
     }
@@ -58,9 +58,9 @@ class CategoryService
      * 
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
      * @param  string  $slug
-     * @return \App\Contracts\CategoryContract
+     * @return \App\Models\Category
      */
-    public function update(UpdateCategoryRequest $request, string $slug): CategoryContract
+    public function update(UpdateCategoryRequest $request, string $slug): Category
     {
         $validated = $request->safe()->only(['name']);
 
@@ -71,9 +71,9 @@ class CategoryService
      * Removes a category.
      * 
      * @param  string  $slug
-     * @return \App\Contracts\CategoryContract
+     * @return bool
      */
-    public function destroy(string $slug): CategoryContract
+    public function destroy(string $slug): bool
     {
         return $this->categories->destroy($slug);
     }

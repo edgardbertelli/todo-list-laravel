@@ -8,8 +8,8 @@
                 <div class="p-6 text-gray-900">
                     <x-forms.form action="{{ route('categories.update', $category->slug) }}"
                                   method="POST"
-                                  request_path="{{ Route::currentRouteName() }}"
                                   novalidate>
+                        @method('PUT')
 
                         <x-input-label for="name" value="Name" />
 

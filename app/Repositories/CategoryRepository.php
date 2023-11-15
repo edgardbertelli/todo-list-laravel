@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\CategoryContract;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -10,16 +12,22 @@ use Illuminate\Support\Str;
 class CategoryRepository implements CategoryContract
 {
     /**
+     * Instantiates the categories model.
+     * 
+     * @return void
+     */
+    public function __construct(
+        private Category $categories
+    ) {}
+
+    /**
      * Lists user's registered categories.
      * 
-     * @return \Illuminate\Support\Facades\DB
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index()
+    public function index(): Collection
     {
-        $categories = DB::table('categories')
-                        ->where('user_id', Auth::user()->id)
-                        ->orderBy('name')
-                        ->get();
+        $categories = $this->categories::where('user_id', Auth::user()->id)->get();
 
         return $categories;
     }
@@ -28,33 +36,29 @@ class CategoryRepository implements CategoryContract
      * Creates a new category.
      * 
      * @param  array  $validated
-     * @return void
+     * @return \App\Models\Category
      */
-    public function store(array $validated)
+    public function store(array $validated): Category
     {
-        $category = DB::table('categories')->insert([
-            'name' => $validated['name'],
-            'slug' => Str::slug($validated['name']),
-            'user_id' => Auth::user()->id,
+        return $this->categories->create([
+            'name'       => $validated['name'],
+            'slug'       => Str::slug($validated['name']),
+            'user_id'    => Auth::user()->id,
             'created_at' => now(),
         ]);
-
-        return $category;
     }
 
     /**
      * Returns a category.
      * 
-     * @param string $slug
+     * @param  string  $slug
+     * @return \App\Models\Category
      */
-    public function show(string $slug)
+    public function show(string $slug): Category
     {
-        $category = DB::table('categories')
-                      ->where('slug', $slug)
-                      ->where('user_id', Auth::user()->id)
-                      ->first();
-
-        return $category;
+        return $this->categories::where('slug', $slug)
+                                ->where('user_id', Auth::user()->id)
+                                ->first();
     }
 
     /**
@@ -62,24 +66,18 @@ class CategoryRepository implements CategoryContract
      * 
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
      * @param  string  $slug
+     * @return \App\Models\Category
      */
-    public function update(array $validated, string $slug)
+    public function update(array $validated, string $slug): Category
     {
-        DB::table('categories')
-           ->where('slug', $slug)
-           ->where('user_id', Auth::user()->id)
-           ->update([
-                'name' => $validated['name'],
-                'slug' => Str::slug($validated['name']),
-                'updated_at' => now()
-           ]);
+        $category = $this->categories::where('slug', $slug)->where('user_id', Auth::user()->id)->first();
 
-        $category = DB::table('categories')
-                       ->where('slug', Str::slug($validated['name']))
-                       ->where('user_id', Auth::user()->id)
-                       ->first();
+        $category->update([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name'])
+        ]);
 
-        return $category;
+        return $category->fresh();
     }
 
     /**
@@ -89,9 +87,10 @@ class CategoryRepository implements CategoryContract
      */
     public function destroy(string $slug)
     {
-        return DB::table('categories')
-                 ->where('slug', $slug)
-                 ->where('user_id', Auth::user()->id)
-                 ->delete();
+        $category = $this->categories::where('slug', $slug)
+                                     ->where('user_id', Auth::user()->id)
+                                     ->first();
+
+        return $category->delete();
     }
 }

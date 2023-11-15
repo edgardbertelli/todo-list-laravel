@@ -68,8 +68,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified category.
      * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $slug
+     * @param string $slug
      */
     public function edit(string $slug): View
     {
@@ -90,12 +89,9 @@ class CategoryController extends Controller
     {
         $updatedCategory = $this->categories->update($request, $slug);
 
-        return redirect()->action(
-            [CategoryController::class, 'show'], [
-                'request' => $request,
-                'slug' => $updatedCategory->slug
-                ]
-        );
+        return redirect()->route('categories.show', [
+            'slug' => $updatedCategory->slug
+        ]);
     }
 
     /**
