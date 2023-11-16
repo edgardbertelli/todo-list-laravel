@@ -14,7 +14,7 @@ class ChecklistRepository implements ChecklistContract
     /**
      * Lists all the checklists.
      * 
-     * @return \Iluuminate\Support\Collection
+     * @return \Iluminate\Support\Collection
      */
     public function index(): Collection
     {

@@ -10,6 +10,8 @@ use App\Services\TaskService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -32,6 +34,10 @@ class TaskController extends Controller
      */
     public function index(): View
     {
+        Log::info("Showing tasks to user'{username}'", [
+            'username' => Auth::user()->username
+        ]);
+
         $tasks = $this->tasks->index();
 
         return view('tasks.index', [
@@ -61,6 +67,11 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request): RedirectResponse
     {
+        Log::info("Creating a new task '{task}' for user '{username}'", [
+            'task' => $request->title,
+            'username' => Auth::user()->username
+        ]);
+
         $this->tasks->store($request);
 
         return redirect()->route('tasks.index');
@@ -74,6 +85,11 @@ class TaskController extends Controller
      */
     public function show(string $slug): View
     {
+        Log::info("Showing task '{task}', to user '{username}'", [
+            'task' => $slug,
+            'username' => Auth::user()->username
+        ]);
+
         $task = $this->tasks->show($slug);
 
         return view('tasks.show', [
@@ -107,6 +123,11 @@ class TaskController extends Controller
      */
     public function update(UpdateChecklistRequest $request, string $slug): RedirectResponse
     {
+        Log::info("Updating task '{}' from user '{username}'", [
+            'task' => $slug,
+            'username' => Auth::user()->username
+        ]);
+
         $updatedTask = $this->tasks->update($request, $slug);
 
         return redirect()->route('tasks.show', [
@@ -122,6 +143,11 @@ class TaskController extends Controller
      */
     public function destroy(string $slug): RedirectResponse
     {
+        Log::info("Deleting task '{task}' from user '{username}'", [
+            'task' => $slug,
+            'username' => Auth::user()->username
+        ]);
+
         $this->tasks->destroy($slug);
 
         return redirect()->route('tasks.index');
