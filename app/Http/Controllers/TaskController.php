@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreChecklistRequest;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateChecklistRequest;
 use App\Services\ChecklistService;
 use App\Services\TaskService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -11,6 +16,8 @@ class TaskController extends Controller
     /**
      * Instantiates the tasks service.
      * 
+     * @param  \App\Services\TaskService  $tasks
+     * @param  \App\Services\ChecklistService  $checklists
      * @return void
      */
     public function __construct(
@@ -20,8 +27,10 @@ class TaskController extends Controller
 
     /**
      * Display a listing of the resource.
+     * 
+     * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(): View
     {
         $tasks = $this->tasks->index();
 
@@ -32,8 +41,10 @@ class TaskController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * 
+     * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(): View
     {
         $checklists = $this->checklists->index();
 
@@ -44,8 +55,11 @@ class TaskController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param  \App\Http\Requests\StoreTaskRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request): RedirectResponse
     {
         $this->tasks->store($request);
 
@@ -55,9 +69,10 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      * 
-     * @param string $slug
+     * @param  string  $slug
+     * @return \Illuminate\Contracts\View\View
      */
-    public function show(string $slug)
+    public function show(string $slug): View
     {
         $task = $this->tasks->show($slug);
 
@@ -69,9 +84,10 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      * 
-     * @param string $slug
+     * @param  string  $slug
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit(string $slug)
+    public function edit(string $slug): View
     {
         $task = $this->tasks->show($slug);
         $checklists = $this->checklists->index();
@@ -85,10 +101,11 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      * 
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
+     * @param  \App\Http\Requests\UpdateTaskRequest  $request
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $slug)
+    public function update(UpdateChecklistRequest $request, string $slug): RedirectResponse
     {
         $updatedTask = $this->tasks->update($request, $slug);
 
@@ -100,9 +117,10 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      * 
-     * @param string $slug
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $slug)
+    public function destroy(string $slug): RedirectResponse
     {
         $this->tasks->destroy($slug);
 
