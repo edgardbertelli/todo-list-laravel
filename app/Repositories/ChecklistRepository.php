@@ -3,17 +3,20 @@
 namespace App\Repositories;
 
 use App\Contracts\ChecklistContract;
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use stdClass;
 
 class ChecklistRepository implements ChecklistContract
 {
     /**
      * Lists all the checklists.
+     * 
+     * @return \Iluuminate\Support\Collection
      */
-    public function index()
+    public function index(): Collection
     {
         $checklists = DB::table('checklists')
                          ->join('categories', 'checklists.category_id', '=', 'categories.id')
@@ -28,15 +31,16 @@ class ChecklistRepository implements ChecklistContract
     /**
      * Creates a new checklist.
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param  array  $validated
+     * @return bool
      */
-    public function store(Request $request)
+    public function store(array $validated): bool
     {
         $checklist = DB::table('checklists')
                         ->insert([
-                            'name'        => $request->input('name'),
-                            'category_id' => $request->input('category_id'),
-                            'slug'        => Str::slug($request->input('name'), '-', config('locale', 'en')),
+                            'name'        => $validated['name'],
+                            'category_id' => $validated['category_id'],
+                            'slug'        => Str::slug($validated['name']),
                             'created_at'  => now()
                         ]);
 
@@ -46,9 +50,10 @@ class ChecklistRepository implements ChecklistContract
     /**
      * Returns a checklist.
      * 
-     * @param string $slug
+     * @param  string  $slug
+     * @return stdClass
      */
-    public function show(string $slug)
+    public function show(string $slug): stdClass
     {
         return DB::table('checklists')
                   ->join('categories', 'checklists.category_id', '=', 'categories.id')
@@ -68,10 +73,11 @@ class ChecklistRepository implements ChecklistContract
     /**
      * Updates a checklist.
      * 
-     * @param  \Illumiante\Http\Request  $request
-     * @param  string  $id
+     * @param  array  $validated
+     * @param  string  $slug
+     * @return stdClass
      */
-    public function update(Request $request, string $slug)
+    public function update(array $validated, string $slug): stdClass
     {
         DB::table('checklists')
            ->join('categories', 'checklists.category_id', '=', 'categories.id')
@@ -79,20 +85,32 @@ class ChecklistRepository implements ChecklistContract
            ->where('checklists.slug', $slug)
            ->where('categories.user_id', Auth::user()->id)
            ->update([
-               'checklists.name'        => $request->input('name'),
-               'checklists.slug'        => Str::slug($request->input('name')),
-               'checklists.category_id' => $request->input('category_id'),
+               'checklists.name'        => $validated['name'],
+               'checklists.slug'        => Str::slug($validated['name']),
+               'checklists.category_id' => $validated['category_id'],
                'checklists.updated_at'  => now()
            ]);
 
         $category = DB::table('checklists')
                        ->join('categories', 'checklists.category_id', '=', 'categories.id')
                        ->join('users', 'categories.user_id', '=', 'users.id')
-                       ->where('checklists.slug', Str::slug($request->input('name')))
+                       ->where('checklists.slug', Str::slug($validated['name']))
                        ->where('categories.user_id', Auth::user()->id)
                        ->select(['checklists.name', 'checklists.slug'])
                        ->first();
         
         return $category;
+    }
+
+    /**
+     * Deletes a checklist.
+     * 
+     * @todo   Implement the removal of a checklist.
+     * @param  string  $slug
+     * @return bool
+     */
+    public function destroy(string $slug): bool
+    {
+        return true;
     }
 }

@@ -6,7 +6,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-card>
                 <div class="p-6 text-gray-900">
-                    <x-forms.form action="{{ route('checklists.store') }}" method="POST" request_path="">
+                    <x-forms.form action="{{ route('checklists.store') }}" method="POST">
                         <x-input-label for="name" value="Name" />
 
                         <x-text-input id="name" name="name" required />

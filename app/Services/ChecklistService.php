@@ -3,13 +3,17 @@
 namespace App\Services;
 
 use App\Contracts\ChecklistContract;
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use App\Http\Requests\StoreChecklistRequest;
+use App\Http\Requests\UpdateChecklistRequest;
+use stdClass;
 
 class ChecklistService
 {
     /**
      * Instantiates the checklists interface.
      * 
+     * @param  \App\Constracts\ChecklistContract  $checklists
      * @return void
      */
     public function __construct(
@@ -18,8 +22,10 @@ class ChecklistService
 
     /**
      * Lists all checklists.
+     * 
+     * @return \Illuminate\Support\Collection
      */
-    public function index()
+    public function index(): Collection
     {
         return $this->checklists->index();
     }
@@ -27,25 +33,49 @@ class ChecklistService
     /**
      * Creates a new checklsist.
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\StoreChecklistRequest $request
+     * @return bool
      */
-    public function store(Request $request)
+    public function store(StoreChecklistRequest $request): bool
     {
-        return $this->checklists->store($request);
+        $validated = $request->safe()->only(['name', 'category_id']);
+
+        return $this->checklists->store($validated);
     }
 
     /**
      * Returns a checklist.
      * 
-     * @param string $slug
+     * @param  string  $slug
+     * @return stdClass
      */
-    public function show(string $slug)
+    public function show(string $slug): stdClass
     {
         return $this->checklists->show($slug);
     }
 
-    public function update(Request $request, string $slug)
+    /**
+     * Updates a checklist.
+     * 
+     * @param  \App\Http\Requests\UpdateChecklistRequest  $request
+     * @param  string  @slug
+     * @return stdClass
+     */
+    public function update(UpdateChecklistRequest $request, string $slug): stdClass
     {
-        return $this->checklists->update($request, $slug);
+        $validated = $request->safe()->only(['name', 'category_id']);
+
+        return $this->checklists->update($validated, $slug);
+    }
+
+    /**
+     * Removes a checklist.
+     * 
+     * @param  string  $slug
+     * @return bool
+     */
+    public function destroy(string $slug): bool
+    {
+        return $this->checklists->destroy($slug);
     }
 }

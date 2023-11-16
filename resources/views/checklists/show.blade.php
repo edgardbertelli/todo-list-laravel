@@ -16,7 +16,8 @@
                         {{ __('Edit') }}
                     </x-primary-button>
                 </a>
-                <x-forms.form action="{{ route('checklists.destroy', $checklist->slug) }}" method="POST" request_path="{{ Route::currentRouteName() }}">
+                <x-forms.form action="{{ route('checklists.destroy', $checklist->slug) }}" method="POST">
+                    @method('DELETE')
                     <x-danger-button>
                         {{ __('Remove') }}
                     </x-danger-button>
