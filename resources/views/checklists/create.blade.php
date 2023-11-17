@@ -6,17 +6,33 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-card>
                 <div class="p-6 text-gray-900">
-                    <x-forms.form action="{{ route('checklists.store') }}" method="POST">
-                        <x-input-label for="name" value="Name" />
+                    <x-forms.form action="{{ route('checklists.store') }}"
+                                  method="POST"
+                                  novalidate>
 
-                        <x-text-input id="name" name="name" required />
+                        <x-input-label for="name" value="Name" />
+                        <x-text-input id="name"
+                                      name="name"
+                                      value="{{ old('name') }}"
+                                      class="@error('name') is-invalid @enderror"
+                                      required />
+                        @error('name')
+                            <div class="text-red-400">{{ $message }}</div>
+                        @enderror
 
                         <div class="mt-4">
-                            <x-forms.select id="categories" name="category_id" label="{{ __('Categories') }}" required>
+                            <x-input-label for="categories" value="Categories" />
+                            <x-forms.select id="categories" 
+                                            name="category_id"
+                                            class="@error('category_id') is-invalid @enderror"
+                                            required>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </x-forms.select>
+                            @error('category_id')
+                                <div class="text-red-400">{{ $message }}</div>
+                            @enderror
                         </div>
                         
                         <div class="mt-4">
