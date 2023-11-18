@@ -34,7 +34,7 @@ class TaskRepository implements TaskContract
             'title'        => $validated['title'],
             'slug'         => Str::slug($validated['title']),
             'description'  => $validated['description'],
-            'checklist_id' => $validated['description'],
+            'checklist_id' => $validated['checklist_id'],
             'created_at'   => now()
         ]);
     }

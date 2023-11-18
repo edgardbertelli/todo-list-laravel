@@ -2,29 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreChecklistRequest;
+use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateChecklistRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Services\ChecklistService;
 use App\Services\TaskService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
     /**
-     * Instantiates the tasks service.
+     * Instantiates tasks and checklists services.
      * 
      * @param  \App\Services\TaskService  $tasks
-     * @param  \App\Services\ChecklistService  $checklists
+     * @param  \App\ChecklistService  $checklists
      * @return void
      */
     public function __construct(
         private TaskService $tasks,
-        private ChecklistService $checklists,
+        private ChecklistService $checklists
     ) {}
 
     /**
@@ -34,10 +31,6 @@ class TaskController extends Controller
      */
     public function index(): View
     {
-        Log::info("Showing tasks to user'{username}'", [
-            'username' => Auth::user()->username
-        ]);
-
         $tasks = $this->tasks->index();
 
         return view('tasks.index', [
@@ -67,11 +60,6 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request): RedirectResponse
     {
-        Log::info("Creating a new task '{task}' for user '{username}'", [
-            'task' => $request->title,
-            'username' => Auth::user()->username
-        ]);
-
         $this->tasks->store($request);
 
         return redirect()->route('tasks.index');
@@ -85,11 +73,6 @@ class TaskController extends Controller
      */
     public function show(string $slug): View
     {
-        Log::info("Showing task '{task}', to user '{username}'", [
-            'task' => $slug,
-            'username' => Auth::user()->username
-        ]);
-
         $task = $this->tasks->show($slug);
 
         return view('tasks.show', [
@@ -121,17 +104,12 @@ class TaskController extends Controller
      * @param  string  $slug
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateChecklistRequest $request, string $slug): RedirectResponse
+    public function update(UpdateTaskRequest $request, string $slug): RedirectResponse
     {
-        Log::info("Updating task '{}' from user '{username}'", [
-            'task' => $slug,
-            'username' => Auth::user()->username
-        ]);
-
-        $updatedTask = $this->tasks->update($request, $slug);
+        $task = $this->tasks->update($request, $slug);
 
         return redirect()->route('tasks.show', [
-            'slug' => $updatedTask->slug
+            'slug' => $task->slug
         ]);
     }
 
@@ -143,11 +121,6 @@ class TaskController extends Controller
      */
     public function destroy(string $slug): RedirectResponse
     {
-        Log::info("Deleting task '{task}' from user '{username}'", [
-            'task' => $slug,
-            'username' => Auth::user()->username
-        ]);
-
         $this->tasks->destroy($slug);
 
         return redirect()->route('tasks.index');
