@@ -9,5 +9,4 @@ interface CategoryContract
     public function show(string $slug);
     public function update(array $validated, string $slug);
     public function destroy(string $slug);
-    public function count();
 }
