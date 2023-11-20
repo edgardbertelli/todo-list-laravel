@@ -3,6 +3,14 @@
     @include('categories.header')
 
     <x-container>
+        <div class="mb-4">
+            <x-link href="{{ route('categories.index') }}">
+                <x-secondary-button>
+                    {{ __('Back') }}
+                </x-secondary-button>
+            </x-link>
+        </div>
+        
         <div class="grid gap-4 grid-cols-2">
             <div>
                 <x-card>
