@@ -1,3 +1,3 @@
-<div {{ $attributes->merge(['class' => 'bg-white overflow-hidden shadow-lg mt-4 mb-4 p-6']) }}>
+<div class="w-full aspect-auto bg-white p-4 shadow-lg" {{ $attributes }}>
     {{ $slot }}
 </div>

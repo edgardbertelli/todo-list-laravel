@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\CategoryContract;
+use App\Events\CategoryDestroyed;
+use App\Events\CategoryStored;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -40,12 +42,16 @@ class CategoryRepository implements CategoryContract
      */
     public function store(array $validated): Category
     {
-        return $this->categories->create([
+        $category = $this->categories->create([
             'name'       => $validated['name'],
             'slug'       => Str::slug($validated['name']),
             'user_id'    => Auth::user()->id,
             'created_at' => now(),
         ]);
+
+        CategoryStored::dispatch($category);
+        
+        return $category;
     }
 
     /**
@@ -91,6 +97,10 @@ class CategoryRepository implements CategoryContract
                                      ->where('user_id', Auth::user()->id)
                                      ->first();
 
-        return $category->delete();
+        $categoryDeleted =  $category->delete();
+
+        CategoryDestroyed::dispatch($category);
+
+        return $categoryDeleted;
     }
 }

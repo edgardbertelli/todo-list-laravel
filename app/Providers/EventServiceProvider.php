@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\CategoryCreated;
+use App\Events\CategoryDestroyed;
+use App\Events\CategoryStored;
+use App\Listeners\LogCategory;
+use App\Listeners\LogCreatedCategory;
+use App\Listeners\LogDestroyedCategory;
+use App\Listeners\LogStoredCategory;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +24,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        CategoryStored::class => [
+            LogStoredCategory::class,
+        ],
+        CategoryDestroyed::class => [
+            LogDestroyedCategory::class,
         ],
     ];
 
