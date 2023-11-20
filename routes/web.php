@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,11 @@ Route::middleware('auth')->group(function () {
                 Route::put('/{slug}', 'update')->name('update');
                 Route::delete('/{slug}', 'destroy')->name('destroy');
     });
+
+    /**
+     * The reports routes.
+     */
+    Route::get('/reports', [ReportController::class, 'make'])->name('reports.make');
 
 });
 

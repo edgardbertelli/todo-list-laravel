@@ -25,4 +25,14 @@ class Checklist extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Get all of the tasks for the Checklist
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

@@ -2,27 +2,32 @@
  
     @include('checklists.header')
 
-    <a href="{{ route('checklists.create') }}">
-        <x-primary-button type="button">
-            {{ __('Create checklist') }}
-        </x-primary-button>
-    </a>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
-        <div class="p-6 text-gray-900">
-            @forelse ($checklists as $checklist)
-            <a href="{{ route('checklists.show', $checklist->slug) }}">
-                <x-card>
-                    {{ $checklist->name }}
-                </x-card>
-            </a>
-            @empty
-            <x-alert>
+    <x-container>
+        <a href="{{ route('checklists.create') }}">
+            <x-primary-button type="button">
+                {{ __('Create checklist') }}
+            </x-primary-button>
+        </a>
+        
+        @if ($checklists->count() === 0)
+            <x-alert class="bg-yellow-200">
                 <p>I'm sorry, {{ Auth::user()->name }}. You don't have any checklists registered yet.<br>
                     But go ahead and <b><a href="{{ route('checklists.create') }}">click here</a></b> to create a new one
                     right now.
                 </p>
             </x-alert>
-            @endforelse
+        @else
+            
+        @endif
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-6">
+            @foreach ($checklists as $checklist)
+                <x-link href="{{ route('checklists.show', $checklist->slug) }}">
+                    <x-card title="{{ $checklist->name }}">
+                        {{ $checklist->name }}
+                    </x-card>
+                </x-link>
+            @endforeach
         </div>
-    </div>
+    </x-container>
+
 </x-app-layout>
