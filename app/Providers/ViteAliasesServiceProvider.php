@@ -21,5 +21,6 @@ class ViteAliasesServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::macro('image', fn (string $asset) => $this->asset("resources/images/{$asset}"));
+        Vite::macro('icon', fn (string $asset) => $this->asset("resources/icons/{$asset}"));
     }
 }

@@ -14,7 +14,7 @@
                 </x-primary-button>
             </x-link>
         </div>
-        
+
         <div class="grid gap-4 grid-cols-3 grid-rows-1">
             {{-- Categories count --}}
             <x-card class="bg-pink-100">

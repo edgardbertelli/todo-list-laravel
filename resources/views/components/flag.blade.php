@@ -1,0 +1,1 @@
+<img src="{{ Vite::icon('flags/' . $country . '.svg') }}" {{ $attributes }} />

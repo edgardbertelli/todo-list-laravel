@@ -23,7 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
+Route::get('/dashboard/}', [DashboardController::class, 'index'])
       ->middleware(['auth', 'verified'])
       ->name('dashboard');
 
@@ -87,6 +87,10 @@ Route::middleware('auth')->group(function () {
      */
     Route::get('/reports', [ReportController::class, 'make'])->name('reports.make');
 
+    /**
+     * The settings routes.
+     */
+    Route::view('/settings', 'settings.index')->name('settings.index');
 });
 
 

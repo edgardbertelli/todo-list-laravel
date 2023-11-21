@@ -13,19 +13,19 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('nav.dashboard') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
-                        {{ __('Categories') }}
+                        {{ __('nav.categories') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('checklists.index')" :active="request()->routeIs('checklists.*')">
-                        {{ __('Checklists') }}
+                        {{ __('nav.checklists') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')">
-                        {{ __('Tasks') }}
+                        {{ __('nav.tasks') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -47,7 +47,11 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('nav.profile') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('settings.index')">
+                            {{ __('nav.settings') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -57,7 +61,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('nav.log_out') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -94,6 +98,10 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('settings.index')">
+                    {{ __('nav.settings') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

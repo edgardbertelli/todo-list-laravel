@@ -14,7 +14,12 @@ class DashboardController extends Controller
         private TaskService $tasks
     ) {}
 
-    public function index()
+    /**
+     * Returns the dashboard view.
+     * 
+     * @param string $locale
+     */
+    public function index(?string $locale = null)
     {
         return view('dashboard', [
             'categories' => $this->categories->index(),
