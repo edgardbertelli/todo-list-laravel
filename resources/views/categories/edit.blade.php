@@ -11,7 +11,7 @@
                                   novalidate>
                         @method('PUT')
 
-                        <x-input-label for="name" value="Name" />
+                        <x-input-label for="name" value="categories.edit_form_input_label_name" />
 
                         <x-text-input id="name" 
                                       name="name"
@@ -25,7 +25,7 @@
 
                         <div class="mt-4">
                             <x-primary-button>
-                                {{ __('Update') }}
+                                {{ __('categories.edit_form_update_button') }}
                             </x-primary-button>
                         </div>
                     </x-forms.form>

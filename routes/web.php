@@ -3,9 +3,12 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
+use App\Http\Middleware\Localized;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +26,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard/}', [DashboardController::class, 'index'])
+Route::get('/dashboard/{locale}', [DashboardController::class, 'index'])
       ->middleware(['auth', 'verified'])
       ->name('dashboard');
 
@@ -41,11 +44,11 @@ Route::middleware('auth')->group(function () {
           ->prefix('/categories')
           ->name('categories.')
           ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
+                Route::get('/{locale}', 'index')->name('index');
+                Route::get('/create/{locale}', 'create')->name('create');
                 Route::post('/','store')->name('store');
-                Route::get('/{slug}', 'show')->name('show');
-                Route::get('/{slug}/edit', 'edit')->name('edit');
+                Route::get('/{slug}/{locale}', 'show')->name('show');
+                Route::get('/{slug}/edit/{locale}', 'edit')->name('edit');
                 Route::put('/{slug}', 'update')->name('update');
                 Route::delete('/{slug}', 'destroy')->name('destroy');
     });
@@ -90,7 +93,9 @@ Route::middleware('auth')->group(function () {
     /**
      * The settings routes.
      */
-    Route::view('/settings', 'settings.index')->name('settings.index');
+    Route::get('/settings/{locale}', [SettingController::class, 'index'])->name('settings.index');
+
+    Route::get('/locales/{locale}/set', [LocaleController::class, 'set'])->name('locales.set');
 });
 
 

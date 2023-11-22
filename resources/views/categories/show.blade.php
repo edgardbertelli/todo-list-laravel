@@ -6,20 +6,22 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-card>
                 <div class="p-6 text-gray-900">
-                    <p><strong>{{ __('Name: ') }}</strong>{{ $category->name }}</p>
-                    <p><strong>{{ __('Created at ') }}</strong>{{ $category->created_at }}</p>
-                    <p><strong>{{ __('Updated at ') }}</strong>{{ $category->updated_at }}</p>
+                    <p><strong>{{ __('categories.show_page_name') }}: </strong>{{ $category->name }}</p>
+                    <p><strong>{{ __('categories.show_page_created_at') }}: </strong>{{ $category->created_at }}</p>
+                    <p><strong>{{ __('categories.show_page_updated_at') }}: </strong>{{ $category->updated_at }}</p>
                 </div>
-                <a href="{{ route('categories.edit', $category->slug) }}">
+
+                <a href="{{ route('categories.edit', ['slug' => $category->slug, 'locale' => session('locale')]) }}">
                     <x-primary-button>
-                        {{ __('Edit') }}
+                        {{ __('categories.show_page_edit_button') }}
                     </x-primary-button>
                 </a>
+
                 <x-forms.form action="{{ route('categories.destroy', $category->slug) }}"
                               method="POST">
                     @method('DELETE')
                     <x-danger-button>
-                        {{ __('Remove') }}
+                        {{ __('categories.show_page_remove_button') }}
                     </x-danger-button>
                 </x-forms.form>
             </x-card>

@@ -13,8 +13,8 @@
                         <p>Select a language.</p>
                     </div>
                     <div>
-                        @foreach (config('app.available_locales') as $locale => $language)
-                            <a href="{{ url($locale) }}">{{ $language }}</a>
+                        @foreach ( config('app.available_locales') as $locale => $language )
+                            <a href="{{ route('locales.set', ['locale' => $locale]) }}">{{ $language }}</a>
                         @endforeach
                     </div>
                 </div>

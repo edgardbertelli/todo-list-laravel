@@ -4,9 +4,9 @@
 
     <x-container>
         <div class="mb-4">
-            <x-link href="{{ route('categories.index') }}">
+            <x-link href="{{ route('categories.index', ['locale' => session('locale')]) }}">
                 <x-secondary-button>
-                    {{ __('Back') }}
+                    {{ __('categories.create_form_back_button') }}
                 </x-secondary-button>
             </x-link>
         </div>
@@ -18,7 +18,7 @@
                         <x-forms.form action="{{ route('categories.store') }}"
                                       method="POST"
                                       novalidate>
-                            <x-input-label for="name" value="Name" />
+                            <x-input-label for="name" value="categories.create_form_input_label_name" />
             
                             <x-text-input id="name"
                                           name="name"
@@ -29,7 +29,7 @@
             
                             <div class="mt-4">
                                 <x-primary-button>
-                                    {{ __('Create') }}
+                                    {{ __('categories.create_form_submit_button') }}
                                 </x-primary-button>
                             </div>
                         </x-forms.form>

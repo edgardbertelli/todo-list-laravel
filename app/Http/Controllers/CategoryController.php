@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Services\CategoryService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\App;
 
 class CategoryController extends Controller
 {
@@ -17,7 +18,9 @@ class CategoryController extends Controller
      */
     public function __construct(
         private CategoryService $categories
-    ) {}
+    ) {
+        $this->middleware('localized')->except(['store', 'update', 'destroy']);
+    }
 
     /**
      * Lists all the categories.

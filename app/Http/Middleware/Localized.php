@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
 
 class Localized
@@ -15,26 +16,14 @@ class Localized
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $routeLocale = $request->route()->parameter('locale')) {
-            return redirect($this->localizedUrl($request, $request->path()));
+        $locale = $request->session()->get('locale');
+
+        if (! in_array($locale, config('app.available_locales'))) {
+            //
         }
 
-        if (! in_array($routeLocale, array_keys(config('app.available_locales')))) {
-            return redirect($this->localizedUrl($request, $request->path()));
-        }
-
-        $request->session()->put('locale', $routeLocale);
-        app()->setLocale($routeLocale);
+        App::setLocale($locale);
 
         return $next($request);
-    }
-
-    private function localizedUrl(Request $request, string $path, ?string $locale = null): string
-    {
-        if (! $locale and $request->session()->has('locale')) {
-            $locale = $request()->session()->get('locale');
-        }
-
-        return url(trim($locale . '/' . $path, '/'));
     }
 }
