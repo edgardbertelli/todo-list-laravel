@@ -5,18 +5,18 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard', ['locale' => session('locale')]) }}">
+                    <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-white" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard', ['locale' => session('locale')])" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('nav.dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('categories.index', ['locale' => session('locale')])" :active="request()->routeIs('categories.*')">
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         {{ __('nav.categories') }}
                     </x-nav-link>
 
@@ -50,7 +50,7 @@
                             {{ __('nav.profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('settings.index', ['locale' => session('locale')])">
+                        <x-dropdown-link :href="route('settings.index')">
                             {{ __('nav.settings') }}
                         </x-dropdown-link>
 
@@ -83,7 +83,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard', ['locale' => session('locale')])" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('nav.dashboard') }}
             </x-responsive-nav-link>
         </div>
@@ -100,7 +100,7 @@
                     {{ __('nav.profile') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('settings.index', ['locale' => session('locale')])">
+                <x-responsive-nav-link :href="route('settings.index')">
                     {{ __('nav.settings') }}
                 </x-responsive-nav-link>
 

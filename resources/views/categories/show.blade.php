@@ -11,7 +11,7 @@
                     <p><strong>{{ __('categories.show_page_updated_at') }}: </strong>{{ $category->updated_at }}</p>
                 </div>
 
-                <a href="{{ route('categories.edit', ['slug' => $category->slug, 'locale' => session('locale')]) }}">
+                <a href="{{ route('categories.edit', ['slug' => $category->slug]) }}">
                     <x-primary-button>
                         {{ __('categories.show_page_edit_button') }}
                     </x-primary-button>

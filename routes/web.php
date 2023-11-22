@@ -26,7 +26,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard/{locale}', [DashboardController::class, 'index'])
+Route::get('/dashboard', [DashboardController::class, 'index'])
       ->middleware(['auth', 'verified'])
       ->name('dashboard');
 
@@ -44,11 +44,11 @@ Route::middleware('auth')->group(function () {
           ->prefix('/categories')
           ->name('categories.')
           ->group(function () {
-                Route::get('/{locale}', 'index')->name('index');
-                Route::get('/create/{locale}', 'create')->name('create');
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
                 Route::post('/','store')->name('store');
-                Route::get('/{slug}/{locale}', 'show')->name('show');
-                Route::get('/{slug}/edit/{locale}', 'edit')->name('edit');
+                Route::get('/{slug}', 'show')->name('show');
+                Route::get('/{slug}/edit', 'edit')->name('edit');
                 Route::put('/{slug}', 'update')->name('update');
                 Route::delete('/{slug}', 'destroy')->name('destroy');
     });
@@ -93,7 +93,7 @@ Route::middleware('auth')->group(function () {
     /**
      * The settings routes.
      */
-    Route::get('/settings/{locale}', [SettingController::class, 'index'])->name('settings.index');
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 
     Route::get('/locales/{locale}/set', [LocaleController::class, 'set'])->name('locales.set');
 });

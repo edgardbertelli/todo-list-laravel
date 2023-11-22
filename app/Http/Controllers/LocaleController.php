@@ -21,8 +21,6 @@ class LocaleController extends Controller
 
         App::setLocale(session('locale'));
 
-        return redirect()->route('settings.index', [
-            'locale' => session('locale')
-        ]);
+        return redirect()->route('settings.index');
     }
 }

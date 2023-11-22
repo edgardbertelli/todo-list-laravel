@@ -3,7 +3,7 @@
     @include('categories.header')
 
     <x-container>
-        <x-link href="{{ route('categories.create', ['locale' => session('locale')]) }}">
+        <x-link href="{{ route('categories.create') }}">
             <x-primary-button type="button">
                 {{ __('categories.create_category_button') }}
             </x-primary-button>
@@ -19,7 +19,7 @@
         @else
             <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-6">
                 @foreach ($categories as $category)
-                    <x-link href="{{ route('categories.show', ['slug' => $category->slug, 'locale' => session('locale')]) }}">
+                    <x-link href="{{ route('categories.show', $category->slug) }}">
                         <x-card title="{{ $category->name }}">
                             {{ $category->name }}
                         </x-card>

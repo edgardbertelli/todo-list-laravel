@@ -4,7 +4,7 @@
 
     <x-container>
         <div class="mb-4">
-            <x-link href="{{ route('categories.index', ['locale' => session('locale')]) }}">
+            <x-link href="{{ route('categories.index') }}">
                 <x-secondary-button>
                     {{ __('categories.create_form_back_button') }}
                 </x-secondary-button>

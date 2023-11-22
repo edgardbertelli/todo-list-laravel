@@ -13,23 +13,17 @@ class DashboardController extends Controller
         private CategoryService $categories,
         private ChecklistService $checklists,
         private TaskService $tasks
-    ) {}
+    ) {
+        $this->middleware('localized');
+    }
 
     /**
      * Returns the dashboard view.
      * 
      * @param string $locale
      */
-    public function index(string $locale)
+    public function index()
     {
-        if (! in_array($locale, ['en', 'pt'])) {
-            abort(400);
-        }
-
-        App::setLocale(session('locale'));
-
-        $categories = $this->categories->index();
-
         return view('dashboard', [
             'categories' => $this->categories->index(),
             'checklists' => $this->checklists->index(),

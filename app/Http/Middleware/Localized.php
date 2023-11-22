@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\UnavailableLocaleException;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -18,8 +19,8 @@ class Localized
     {
         $locale = $request->session()->get('locale');
 
-        if (! in_array($locale, config('app.available_locales'))) {
-            //
+        if (! key_exists($locale, config('app.available_locales'))) {
+            throw new UnavailableLocaleException('Unavailable locale.', 400);
         }
 
         App::setLocale($locale);
