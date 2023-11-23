@@ -6,10 +6,14 @@ use App\Events\CategoryCreated;
 use App\Events\CategoryDeleted;
 use App\Events\ChecklistCreated;
 use App\Events\ChecklistDeleted;
+use App\Events\TaskCreated;
+use App\Events\TaskDeleted;
 use App\Listeners\LogCreatedCategory;
 use App\Listeners\LogCreatedChecklist;
+use App\Listeners\LogCreatedTask;
 use App\Listeners\LogDeletedCategory;
 use App\Listeners\LogDeletedChecklist;
+use App\Listeners\LogDeletedTask;
 use App\Listeners\LogNewUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -39,6 +43,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         ChecklistDeleted::class => [
             LogDeletedChecklist::class,
+        ],
+        TaskCreated::class => [
+            LogCreatedTask::class,
+        ],
+        TaskDeleted::class => [
+            LogDeletedTask::class,
         ],
     ];
 

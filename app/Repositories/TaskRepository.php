@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\TaskContract;
+use App\Events\TaskCreated;
+use App\Events\TaskDeleted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -30,13 +32,18 @@ class TaskRepository implements TaskContract
      */
     public function store(array $validated): bool
     {
-        return DB::table('tasks')->insert([
+
+        $task = DB::table('tasks')->insert([
             'title'        => $validated['title'],
             'slug'         => Str::slug($validated['title']),
             'description'  => $validated['description'],
             'checklist_id' => $validated['checklist_id'],
             'created_at'   => now()
         ]);
+
+        TaskCreated::dispatch($task);
+
+        return $task;
     }
 
     /**
@@ -100,7 +107,7 @@ class TaskRepository implements TaskContract
      */
     public function destroy(string $slug): bool
     {
-        return DB::table('tasks')
+        $task = DB::table('tasks')
                    ->join('checklists', 'tasks.checklist_id', '=', 'checklists.id')
                    ->join('categories', 'checklists.category_id', '=', 'categories.id')
                    ->join('users', 'categories.user_id', '=', 'users.id')
@@ -108,5 +115,9 @@ class TaskRepository implements TaskContract
                    ->where('tasks.slug', $slug)
                    ->where('categories.user_id', Auth::user()->id)
                    ->delete();
+        
+        TaskDeleted::dispatch($task);
+
+        return $task;
     }
 }
