@@ -4,8 +4,12 @@ namespace App\Providers;
 
 use App\Events\CategoryCreated;
 use App\Events\CategoryDeleted;
+use App\Events\ChecklistCreated;
+use App\Events\ChecklistDeleted;
 use App\Listeners\LogCreatedCategory;
+use App\Listeners\LogCreatedChecklist;
 use App\Listeners\LogDeletedCategory;
+use App\Listeners\LogDeletedChecklist;
 use App\Listeners\LogNewUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -29,6 +33,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         CategoryDeleted::class => [
             LogDeletedCategory::class,
+        ],
+        ChecklistCreated::class => [
+            LogCreatedChecklist::class,
+        ],
+        ChecklistDeleted::class => [
+            LogDeletedChecklist::class,
         ],
     ];
 

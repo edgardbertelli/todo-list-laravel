@@ -5,8 +5,6 @@ namespace App\Repositories;
 use App\Contracts\CategoryContract;
 use App\Events\CategoryCreated;
 use App\Events\CategoryDeleted;
-use App\Events\CategoryDestroyed;
-use App\Events\CategoryStored;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
