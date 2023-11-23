@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\App;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('localized');
+    }
+
     public function index()
     {
         App::setLocale(session('locale'));
