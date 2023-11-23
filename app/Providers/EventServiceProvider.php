@@ -3,14 +3,10 @@
 namespace App\Providers;
 
 use App\Events\CategoryCreated;
-use App\Events\CategoryDestroyed;
-use App\Events\CategoryStored;
-use App\Events\NewUser;
-use App\Listeners\LogCategory;
+use App\Events\CategoryDeleted;
 use App\Listeners\LogCreatedCategory;
-use App\Listeners\LogDestroyedCategory;
+use App\Listeners\LogDeletedCategory;
 use App\Listeners\LogNewUser;
-use App\Listeners\LogStoredCategory;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,14 +24,11 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
             LogNewUser::class,
         ],
-        CategoryStored::class => [
-            LogStoredCategory::class,
+        CategoryCreated::class => [
+            LogCreatedCategory::class,
         ],
-        CategoryDestroyed::class => [
-            LogDestroyedCategory::class,
-        ],
-        NewUser::class => [
-            LogNewUser::class,
+        CategoryDeleted::class => [
+            LogDeletedCategory::class,
         ],
     ];
 

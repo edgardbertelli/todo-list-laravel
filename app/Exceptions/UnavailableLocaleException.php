@@ -15,6 +15,6 @@ class UnavailableLocaleException extends Exception
 
     public function render(Request $request): Response
     {
-        return response("I'm sorry, but this locale is not available", 400);
+        return response()->view('errors.unavailable-locale', [], 400);
     }
 }

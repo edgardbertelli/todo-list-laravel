@@ -2,13 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\CategoryStored;
+use App\Events\CategoryCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class LogStoredCategory
+class LogCreatedCategory
 {
     /**
      * Create the event listener.
@@ -21,11 +21,11 @@ class LogStoredCategory
     /**
      * Handle the event.
      */
-    public function handle(CategoryStored $event): void
+    public function handle(CategoryCreated $event): void
     {
-        Log::info("User \"{username}\" has created a new category \"{category}\".", [
+        Log::info("User '{username}' has created a new '{category} category.'", [
             'username' => Auth::user()->username,
-            'category' => $event->category->name,
+            'category' => $event->category->name
         ]);
     }
 }

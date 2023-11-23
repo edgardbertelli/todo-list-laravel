@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\CategoryContract;
+use App\Events\CategoryCreated;
+use App\Events\CategoryDeleted;
 use App\Events\CategoryDestroyed;
 use App\Events\CategoryStored;
 use App\Models\Category;
@@ -48,7 +50,7 @@ class CategoryRepository implements CategoryContract
             'created_at' => now(),
         ]);
 
-        CategoryStored::dispatch($category);
+        CategoryCreated::dispatch($category);
         
         return $category;
     }
@@ -98,7 +100,7 @@ class CategoryRepository implements CategoryContract
 
         $categoryDeleted =  $category->delete();
 
-        CategoryDestroyed::dispatch($category);
+        CategoryDeleted::dispatch($category);
 
         return $categoryDeleted;
     }

@@ -17,14 +17,18 @@ class Localized
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = $request->session()->get('locale');
+        if ($request->session()->missing('locale')) {
+            App::setLocale(config('app.locale'));
+        } else {
+            $locale = $request->session()->get('locale');
 
-        if (! key_exists($locale, config('app.available_locales'))) {
-            throw new UnavailableLocaleException('Unavailable locale.', 400);
+            if (! key_exists($locale, config('app.available_locales'))) {
+                throw new UnavailableLocaleException('Unavailable locale.', 400);
+            }
+    
+            App::setLocale($locale);
         }
-
-        App::setLocale($locale);
-
+        
         return $next($request);
     }
 }

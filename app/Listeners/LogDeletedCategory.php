@@ -2,13 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\CategoryDestroyed;
+use App\Events\CategoryDeleted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class LogDestroyedCategory
+class LogDeletedCategory
 {
     /**
      * Create the event listener.
@@ -21,11 +21,11 @@ class LogDestroyedCategory
     /**
      * Handle the event.
      */
-    public function handle(CategoryDestroyed $event): void
+    public function handle(CategoryDeleted $event): void
     {
-        Log::info("User \"{username}\" has destroyed their category \"{category}\".", [
+        Log::info("User \"{username}\" has deleted their \"{category}\" category.", [
             'username' => Auth::user()->username,
-            'category' => $event->category->name,
+            'category' => $event->category->name
         ]);
     }
 }

@@ -2,6 +2,8 @@
     
     @include('categories.header')
 
+    @section('title', 'Categories')
+
     <x-container>
         <x-link href="{{ route('categories.create') }}">
             <x-primary-button type="button">

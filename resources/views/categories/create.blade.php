@@ -2,6 +2,8 @@
     
     @include('categories.header')
 
+    @section('title', 'Categories')
+
     <x-container>
         <div class="mb-4">
             <x-link href="{{ route('categories.index') }}">
