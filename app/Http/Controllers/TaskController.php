@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Services\ChecklistService;
@@ -22,7 +21,9 @@ class TaskController extends Controller
     public function __construct(
         private TaskService $tasks,
         private ChecklistService $checklists
-    ) {}
+    ) {
+        $this->middleware('localized')->except(['store', 'update', 'destroy']);
+    }
 
     /**
      * Display a listing of the resource.

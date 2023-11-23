@@ -5,7 +5,7 @@
     <x-container>
         <a href="{{ route('tasks.create') }}">
             <x-primary-button type="button">
-                {{ __('Create task') }}
+                {{ __('tasks.create_task_button') }}
             </x-primary-button>
         </a>
     

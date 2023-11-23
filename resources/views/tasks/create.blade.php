@@ -10,7 +10,7 @@
 
                         {{-- Title --}}
                         <div>
-                            <x-input-label for="title" value="Title" />
+                            <x-input-label for="title" value="tasks.create_form_input_label_title" />
                             <x-text-input id="title"
                                           name="title"
                                           class="@error('title') is-invalid @enderror"
@@ -23,7 +23,7 @@
 
                         {{-- Description --}}
                         <div class="mt-4">
-                            <x-input-label for="description" value="Description" />
+                            <x-input-label for="description" value="tasks.create_form_input_label_description" />
                             <x-forms.textarea id="description"
                                               name="description"
                                               class="@error('description') is-invalid @enderror"
@@ -34,7 +34,7 @@
 
                         {{-- Checklist's ID --}}
                         <div class="mt-4">
-                            <x-input-label for="checklists" value="Checklists" />
+                            <x-input-label for="checklists" value="tasks.create_form_input_label_checklist" />
                             <x-forms.select id="checklists"
                                             name="checklist_id"
                                             class="@error('checklist_id') is-invalid @enderror"
@@ -49,7 +49,7 @@
 
                         <div class="mt-4">
                             <x-primary-button>
-                                {{ __('Create') }}
+                                {{ __('tasks.create_form_submit_button') }}
                             </x-primary-button>
                         </div>
                     </x-forms.form>
