@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\ChecklistContract;
+use App\Events\ChecklistCreated;
+use App\Events\TaskDeleted;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +45,8 @@ class ChecklistRepository implements ChecklistContract
                             'slug'        => Str::slug($validated['name']),
                             'created_at'  => now()
                         ]);
+
+        ChecklistCreated::dispatch($checklist);
 
         return $checklist;
     }
@@ -106,11 +110,13 @@ class ChecklistRepository implements ChecklistContract
      * Deletes a checklist.
      * 
      * @todo   Implement the removal of a checklist.
+     * @todo   Implement the dispatch of a task removal (event log).
      * @param  string  $slug
      * @return bool
      */
     public function destroy(string $slug): bool
     {
+        //
         return true;
     }
 }
