@@ -6,20 +6,20 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-card>
                 <div class="p-6 text-gray-900">
-                    <p><strong>{{ __('Name: ') }}</strong>{{ $checklist->name }}</p>
-                    <p><strong>{{ __('Category: ') }}</strong>{{ $checklist->category_name }}</p>
-                    <p><strong>{{ __('Created at ') }}</strong>{{ $checklist->created_at }}</p>
-                    <p><strong>{{ __('Updated at ') }}</strong>{{ $checklist->updated_at }}</p>
+                    <p><strong>{{ __('checklists.show_page_name') }}: </strong>{{ $checklist->name }}</p>
+                    <p><strong>{{ __('checklists.show_page_category') }}: </strong>{{ $checklist->category_name }}</p>
+                    <p><strong>{{ __('checklists.show_page_created_at') }}: </strong>{{ $checklist->created_at }}</p>
+                    <p><strong>{{ __('checklists.show_page_updated_at') }}: </strong>{{ $checklist->updated_at }}</p>
                 </div>
                 <a href="{{ route('checklists.edit', $checklist->slug) }}">
                     <x-primary-button>
-                        {{ __('Edit') }}
+                        {{ __('checklists.show_page_edit_button') }}
                     </x-primary-button>
                 </a>
                 <x-forms.form action="{{ route('checklists.destroy', $checklist->slug) }}" method="POST">
                     @method('DELETE')
                     <x-danger-button>
-                        {{ __('Remove') }}
+                        {{ __('checklists.show_page_remove_button') }}
                     </x-danger-button>
                 </x-forms.form>
             </x-card>

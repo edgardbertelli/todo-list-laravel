@@ -23,7 +23,9 @@ class ChecklistController extends Controller
     public function __construct(
         private ChecklistService $checklists,
         private CategoryService $categories,
-    ) {}
+    ) {
+        $this->middleware('localized')->except(['store', 'update', 'destroy']);
+    }
 
     /**
      * Display a listing of the resource.

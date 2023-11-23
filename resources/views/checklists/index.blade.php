@@ -5,7 +5,7 @@
     <x-container>
         <a href="{{ route('checklists.create') }}">
             <x-primary-button type="button">
-                {{ __('Create checklist') }}
+                {{ __('checklists.create_checklist_button') }}
             </x-primary-button>
         </a>
         

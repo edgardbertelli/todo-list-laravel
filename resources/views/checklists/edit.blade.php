@@ -11,7 +11,7 @@
                                   novalidate>
                         @method('PUT')
                         
-                        <x-input-label for="name" value="Name" />
+                        <x-input-label for="name" value="checklists.edit_form_input_label_name" />
                         <x-text-input id="name"
                                       name="name"
                                       class="@error('name') is-invalid @enderror"
@@ -22,7 +22,7 @@
                         @enderror
 
                         <div class="mt-4">
-                            <x-input-label for="categories" value="Categories" />
+                            <x-input-label for="categories" value="checklists.edit_form_input_label_category" />
                             <x-forms.select id="categories" 
                                             name="category_id"
                                             class="@error('category_id') is-invalid @enderror"
@@ -38,7 +38,7 @@
                         
                         <div class="mt-4">
                             <x-primary-button>
-                                {{ __('Update') }}
+                                {{ __('checklists.edit_form_update_button') }}
                             </x-primary-button>
                         </div>
                     </x-forms.form>

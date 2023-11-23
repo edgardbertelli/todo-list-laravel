@@ -10,7 +10,7 @@
                                   method="POST"
                                   novalidate>
 
-                        <x-input-label for="name" value="Name" />
+                        <x-input-label for="name" value="checklists.create_form_input_label_name" />
                         <x-text-input id="name"
                                       name="name"
                                       value="{{ old('name') }}"
@@ -21,7 +21,7 @@
                         @enderror
 
                         <div class="mt-4">
-                            <x-input-label for="categories" value="Categories" />
+                            <x-input-label for="categories" value="checklists.create_form_input_label_category" />
                             <x-forms.select id="categories" 
                                             name="category_id"
                                             class="@error('category_id') is-invalid @enderror"
@@ -37,7 +37,7 @@
                         
                         <div class="mt-4">
                             <x-primary-button>
-                                {{ __('Create') }}
+                                {{ __('checklists.create_form_submit_button') }}
                             </x-primary-button>
                         </div>
                     </x-forms.form>
