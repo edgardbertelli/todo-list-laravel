@@ -55,7 +55,9 @@ class CategoryController extends Controller
     {
         $this->categories->store($request);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')
+                         ->with('status_message',
+                                "Category \"{$request->name}\" has been created succesfully!");
     }
 
     /**
@@ -96,9 +98,8 @@ class CategoryController extends Controller
     {
         $updatedCategory = $this->categories->update($request, $slug);
 
-        return redirect()->route('categories.show', [
-            'slug' => $updatedCategory->slug
-        ]);
+        return redirect()->route('categories.show', ['slug' => $updatedCategory->slug])
+                         ->with('status_message', "Category has been updated succesfully!");
     }
 
     /**
@@ -110,6 +111,7 @@ class CategoryController extends Controller
     {
         $this->categories->destroy($category);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')
+                         ->with('status_message', 'The category has been deleted succesfully.');
     }
 }

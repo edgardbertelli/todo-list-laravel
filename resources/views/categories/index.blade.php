@@ -5,6 +5,13 @@
     @section('title', 'Categories')
 
     <x-container>
+        
+        @if (session('status_message'))
+            <x-alert class="bg-green-200 mb-6">
+                {{ session('status_message') }}
+            </x-alert>
+        @endif
+
         <x-link href="{{ route('categories.create') }}">
             <x-primary-button type="button">
                 {{ __('categories.create_category_button') }}
