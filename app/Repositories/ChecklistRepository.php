@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Contracts\ChecklistContract;
-use App\Events\ChecklistCreated;
-use App\Events\TaskDeleted;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +44,7 @@ class ChecklistRepository implements ChecklistContract
                             'created_at'  => now()
                         ]);
 
-        ChecklistCreated::dispatch($checklist);
+        // ChecklistCreated::dispatch($checklist);
 
         return $checklist;
     }

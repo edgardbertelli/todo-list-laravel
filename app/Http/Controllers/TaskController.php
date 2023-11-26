@@ -63,7 +63,8 @@ class TaskController extends Controller
     {
         $this->tasks->store($request);
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')
+                         ->with('status_message', "The \"{$request->name}\" task has been created succesfully!");
     }
 
     /**
@@ -107,11 +108,11 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, string $slug): RedirectResponse
     {
-        $task = $this->tasks->update($request, $slug);
+        $updatedTask = $this->tasks->update($request, $slug);
 
         return redirect()->route('tasks.show', [
-            'slug' => $task->slug
-        ]);
+            'slug' => $updatedTask->slug
+        ])->with('status_message', 'The task has been update succesfully!');
     }
 
     /**
@@ -124,6 +125,7 @@ class TaskController extends Controller
     {
         $this->tasks->destroy($slug);
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')
+                         ->with('status_message', 'The task has been removed succesfully!');
     }
 }

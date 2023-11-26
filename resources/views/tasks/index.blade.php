@@ -3,6 +3,12 @@
     @include('tasks.header')
 
     <x-container>
+        @if (session('status_message'))
+            <x-alert class="bg-green-200 mb-6">
+                {{ session('status_message') }}
+            </x-alert>
+        @endif
+
         <a href="{{ route('tasks.create') }}">
             <x-primary-button type="button">
                 {{ __('tasks.create_task_button') }}

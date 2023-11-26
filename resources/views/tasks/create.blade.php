@@ -14,11 +14,10 @@
                             <x-text-input id="title"
                                           name="title"
                                           class="@error('title') is-invalid @enderror"
+                                          value="{{ old('title') }}"
                                           autofocus
                                           required />
-                            @error('title')
-                                <div class="text-red-400">{{ $message }}</div>
-                            @enderror
+                            <x-input-error :messages="$errors->get('title')" class="mt-2" />
                         </div>
 
                         {{-- Description --}}
@@ -30,6 +29,7 @@
                                               rows="5"
                                               cols="60"
                                               required />
+                            <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
                         {{-- Checklist's ID --}}
@@ -45,6 +45,7 @@
                                     </option>
                                 @endforeach
                             </x-forms.select>
+                            <x-input-error :messages="$errors->get('checklist_id')" class="mt-2" />
                         </div>
 
                         <div class="mt-4">

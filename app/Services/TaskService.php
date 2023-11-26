@@ -64,7 +64,8 @@ class TaskService
      */
     public function update(UpdateTaskRequest $request, string $slug): stdClass
     {
-        $validated = $request->safe()->only(['title', 'description', 'category_id']);
+        $validated = $request->safe()->only(['title', 'description', 'checklist_id']);
+
         return $this->tasks->update($validated, $slug);
     }
 

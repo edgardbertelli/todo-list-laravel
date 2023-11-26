@@ -21,9 +21,8 @@
                                       class="@error('name') is-invalid @enderror"
                                       :value="$category->name"
                                       required />
-                        @error('name')
-                            <div class="text-red-400">{{ $message }}</div>
-                        @enderror
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+
 
                         <div class="mt-4">
                             <x-primary-button>

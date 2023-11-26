@@ -41,7 +41,7 @@ class TaskRepository implements TaskContract
             'created_at'   => now()
         ]);
 
-        TaskCreated::dispatch($task);
+        // TaskCreated::dispatch($task);
 
         return $task;
     }
@@ -116,7 +116,7 @@ class TaskRepository implements TaskContract
                    ->where('categories.user_id', Auth::user()->id)
                    ->delete();
         
-        TaskDeleted::dispatch($task);
+        // TaskDeleted::dispatch($task);
 
         return $task;
     }
