@@ -3,6 +3,12 @@
     @include('checklists.header')
 
     <x-container>
+        @if (session('status_message'))
+            <x-alert class="bg-green-200 mb-6">
+                {{ session('status_message') }}
+            </x-alert>
+        @endif
+
         <a href="{{ route('checklists.create') }}">
             <x-primary-button type="button">
                 {{ __('checklists.create_checklist_button') }}

@@ -8,8 +8,6 @@ use App\Services\CategoryService;
 use App\Services\ChecklistService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ChecklistController extends Controller
 {
@@ -34,10 +32,6 @@ class ChecklistController extends Controller
      */
     public function index(): View
     {
-        Log::info("Showing the checklists for user '{username}'", [
-            'username' => Auth::user()->username
-        ]);
-
         $checklists = $this->checklists->index();
         
         return view('checklists.index', [
@@ -67,14 +61,10 @@ class ChecklistController extends Controller
      */
     public function store(StoreChecklistRequest $request): RedirectResponse
     {
-        Log::info("Creating new category '{category}' for user '{username}'", [
-            'category' => $request->name,
-            'username' => Auth::user()->username
-        ]);
-
         $this->checklists->store($request);
 
-        return redirect()->action([ChecklistController::class, 'index']);
+        return redirect()->route('checklists.index')
+                         ->with('status_message', "The \"{$request->name}\" checklist has been created succesfully!");
     }
 
     /**
@@ -85,11 +75,6 @@ class ChecklistController extends Controller
      */
     public function show(string $slug): View
     {
-        Log::info("Showing checklist '{checklist}' to user '{username}'", [
-            'checklist' => $slug,
-            'username' => Auth::user()->username
-        ]);
-
         $checklist  = $this->checklists->show($slug);
 
         return view('checklists.show', [
@@ -123,16 +108,11 @@ class ChecklistController extends Controller
      */
     public function update(UpdateChecklistRequest $request, string $slug): RedirectResponse
     {
-        Log::info("Updating checklist '{checklist}' from user '{username}'", [
-            'checklist' => $slug,
-            'username' => Auth::user()->username
-        ]);
-
         $updatedChecklist = $this->checklists->update($request, $slug);
 
         return redirect()->route('checklists.show', [
             'slug' => $updatedChecklist->slug
-        ]);
+        ])->with('status_message', 'The checklist has been update succesfully!');
     }
 
     /**
@@ -143,13 +123,9 @@ class ChecklistController extends Controller
      */
     public function destroy(string $slug): RedirectResponse
     {
-        Log::info("Deleting checklist '{checklist}' from user '{username}'", [
-            'checklist' => $slug,
-            'username' => Auth::user()->username
-        ]);
-
         $this->checklists->destroy($slug);
 
-        return redirect()->route('checklists.index');
+        return redirect()->route('checklists.index')
+                         ->with('status_message', 'The checklist has been removed succesfully!');
     }
 }
