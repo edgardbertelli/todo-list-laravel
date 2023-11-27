@@ -6,7 +6,7 @@ interface CategoryContract
 {
     public function index();
     public function store(array $validated);
-    public function show(string $slug);
-    public function update(array $validated, string $slug);
-    public function destroy(string $slug);
+    public function show(string $id);
+    public function update(array $validated, string $id);
+    public function destroy(string $id);
 }

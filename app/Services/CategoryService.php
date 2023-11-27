@@ -7,8 +7,6 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class CategoryService
 {
@@ -47,36 +45,36 @@ class CategoryService
     /**
      * Returns a category.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return \App\Models\Category
      */
-    public function show(string $slug): Category
+    public function show(string $id): Category
     {
-        return $this->categories->show($slug);
+        return $this->categories->show($id);
     }
 
     /**
      * Updates a category.
      * 
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return \App\Models\Category
      */
-    public function update(UpdateCategoryRequest $request, string $slug): Category
+    public function update(UpdateCategoryRequest $request, string $id): Category
     {
         $validated = $request->safe()->only(['name']);
 
-        return $this->categories->update($validated, $slug);
+        return $this->categories->update($validated, $id);
     }
 
     /**
      * Removes a category.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return bool
      */
-    public function destroy(string $slug): bool
+    public function destroy(string $id): bool
     {
-        return $this->categories->destroy($slug);
+        return $this->categories->destroy($id);
     }
 }

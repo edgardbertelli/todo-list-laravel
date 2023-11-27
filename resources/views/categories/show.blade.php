@@ -20,13 +20,13 @@
                     <p><strong>{{ __('categories.show_page_updated_at') }}: </strong>{{ $category->updated_at }}</p>
                 </div>
 
-                <a href="{{ route('categories.edit', ['slug' => $category->slug]) }}">
+                <a href="{{ route('categories.edit', ['id' => $category->id]) }}">
                     <x-primary-button>
                         {{ __('categories.show_page_edit_button') }}
                     </x-primary-button>
                 </a>
 
-                <x-forms.form action="{{ route('categories.destroy', $category->slug) }}"
+                <x-forms.form action="{{ route('categories.destroy', ['id' => $category->id]) }}"
                               method="POST">
                     @method('DELETE')
                     <x-danger-button>

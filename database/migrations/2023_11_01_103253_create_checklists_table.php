@@ -15,12 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 20);
             $table->string('slug');
-            $table->unsignedBigInteger('category_id');
+            $table->foreignUuid('category_id');
             $table->timestamps();
-        });
-
-        Schema::table('checklists', function (Blueprint $table) {
-            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

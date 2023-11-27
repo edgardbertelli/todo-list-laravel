@@ -63,11 +63,11 @@ class CategoryController extends Controller
     /**
      * Display the specified category.
      * 
-     * @param string $slug
+     * @param string $id
      */
-    public function show(string $slug): View
+    public function show(string $id): View
     {
-        $category = $this->categories->show($slug);
+        $category = $this->categories->show($id);
 
         return view('categories.show', [
             'category' => $category
@@ -77,11 +77,11 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified category.
      * 
-     * @param string $slug
+     * @param string $id
      */
-    public function edit(string $slug): View
+    public function edit(string $id): View
     {
-        $category = $this->categories->show($slug);
+        $category = $this->categories->show($id);
 
         return view('categories.edit', [
             'category' => $category
@@ -92,24 +92,24 @@ class CategoryController extends Controller
      * Update the specified category in storage.
      * 
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
-     * @param  string  $slug
+     * @param  string  $id
      */
-    public function update(UpdateCategoryRequest $request, string $slug): RedirectResponse
+    public function update(UpdateCategoryRequest $request, string $id): RedirectResponse
     {
-        $updatedCategory = $this->categories->update($request, $slug);
+        $updatedCategory = $this->categories->update($request, $id);
 
-        return redirect()->route('categories.show', ['slug' => $updatedCategory->slug])
+        return redirect()->route('categories.show', ['id' => $updatedCategory->id])
                          ->with('status_message', "Category has been updated succesfully!");
     }
 
     /**
      * Remove the specified category from storage.
      * 
-     * @param string $category
+     * @param string $id
      */
-    public function destroy(string $category): RedirectResponse
+    public function destroy(string $id): RedirectResponse
     {
-        $this->categories->destroy($category);
+        $this->categories->destroy($id);
 
         return redirect()->route('categories.index')
                          ->with('status_message', 'The category has been deleted succesfully.');

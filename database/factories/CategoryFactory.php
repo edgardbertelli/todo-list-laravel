@@ -19,7 +19,7 @@ class CategoryFactory extends Factory
         return [
             'name' => fake()->unique()->word(),
             'slug' => fake()->unique()->slug(),
-            'user_id' => 1
+            'user_id' => fake()->uuid(),
         ];
     }
 }

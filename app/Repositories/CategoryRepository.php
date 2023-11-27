@@ -44,8 +44,7 @@ class CategoryRepository implements CategoryContract
         $category = $this->categories->create([
             'name'       => $validated['name'],
             'slug'       => Str::slug($validated['name']),
-            'user_id'    => Auth::user()->id,
-            'created_at' => now(),
+            'user_id'    => Auth::user()->id
         ]);
 
         CategoryCreated::dispatch($category);
@@ -56,12 +55,12 @@ class CategoryRepository implements CategoryContract
     /**
      * Returns a category.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return \App\Models\Category
      */
-    public function show(string $slug): Category
+    public function show(string $id): Category
     {
-        return $this->categories::where('slug', $slug)
+        return $this->categories::where('id', $id)
                                 ->where('user_id', Auth::user()->id)
                                 ->first();
     }
@@ -70,12 +69,12 @@ class CategoryRepository implements CategoryContract
      * Updates a category.
      * 
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return \App\Models\Category
      */
-    public function update(array $validated, string $slug): Category
+    public function update(array $validated, string $id): Category
     {
-        $category = $this->categories::where('slug', $slug)->where('user_id', Auth::user()->id)->first();
+        $category = $this->categories::where('id', $id)->where('user_id', Auth::user()->id)->first();
 
         $category->update([
             'name' => $validated['name'],
@@ -88,11 +87,11 @@ class CategoryRepository implements CategoryContract
     /**
      * Removes a category.
      * 
-     * @param string $slug
+     * @param string $id
      */
-    public function destroy(string $slug)
+    public function destroy(string $id)
     {
-        $category = $this->categories::where('slug', $slug)
+        $category = $this->categories::where('id', $id)
                                      ->where('user_id', Auth::user()->id)
                                      ->first();
 
