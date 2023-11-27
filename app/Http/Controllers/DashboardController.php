@@ -24,10 +24,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard', [
-            'categories' => $this->categories->index(),
-            'checklists' => $this->checklists->index(),
-            'tasks'      => $this->tasks->index(),
-        ]);
+        $categoriesCount = $this->categories->index()->count();
+        $checklistsCount = $this->checklists->index()->count();
+        $tasksCount = $this->tasks->index()->count();
+
+        return view('dashboard', compact(['categoriesCount', 'checklistsCount', 'tasksCount']));
     }
 }

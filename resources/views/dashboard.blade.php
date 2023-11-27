@@ -24,7 +24,7 @@
                     </svg>
                     <div>
                         <p class="font-semibold">{{ __('dashboard.categories') }}</p>
-                        <p>{{ $categories->count() }}</p>
+                        <p>{{ $categoriesCount }}</p>
                     </div>                  
                 </div>
             </x-card>
@@ -37,7 +37,7 @@
                     </svg>
                     <div>
                         <p class="font-semibold">{{ __('dashboard.checklists') }}</p>
-                        <p>{{ $checklists->count() }}</p>
+                        <p>{{ $checklistsCount }}</p>
                     </div>                      
                 </div>
             </x-card>
@@ -50,7 +50,7 @@
                     </svg>                      
                     <div>
                         <p class="font-semibold">{{ __('dashboard.tasks') }}</p>
-                        <p>{{ $tasks->count() }}</p>
+                        <p>{{ $tasksCount }}</p>
                     </div>
                 </div>
             </x-card>
