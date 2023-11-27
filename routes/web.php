@@ -8,7 +8,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
-use App\Http\Middleware\Localized;
 use Illuminate\Support\Facades\Route;
 
 /*
