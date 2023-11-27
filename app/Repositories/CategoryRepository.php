@@ -81,7 +81,7 @@ class CategoryRepository implements CategoryContract
             'slug' => Str::slug($validated['name'])
         ]);
 
-        return $category->fresh();
+        return $category->refresh();
     }
 
     /**

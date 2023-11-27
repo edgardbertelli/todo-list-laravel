@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'pt',
 
     /*
     |--------------------------------------------------------------------------
@@ -185,6 +185,8 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ViteAliasesServiceProvider::class,
         App\Providers\LogShareContextProvider::class,
+        App\Providers\CollectionMicroServiceProvider::class,
+        App\Providers\DiscardingAttributesServiceProvider::class,
     ])->toArray(),
 
     /*

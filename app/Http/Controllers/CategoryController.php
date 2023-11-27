@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Category;
+use App\Models\Checklist;
+use App\Models\User;
 use App\Services\CategoryService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -25,9 +30,16 @@ class CategoryController extends Controller
     /**
      * Lists all the categories.
      */
-    public function index(): View
+    public function index()
     {
-        $categories = $this->categories->index();
+        $userId = Auth::user()->id;
+
+        $categories = Category::addSelect([
+            'users' => User::select('id')
+                        ->whereColumn('user_id', 'users.id')
+        ])->where('user_id', $userId)->get();
+
+        // $categories = $this->categories->index();
 
         return view('categories.index', [
             'categories' => $categories

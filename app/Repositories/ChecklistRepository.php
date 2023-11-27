@@ -3,6 +3,10 @@
 namespace App\Repositories;
 
 use App\Contracts\ChecklistContract;
+use App\Events\ChecklistCreated;
+use App\Events\ChecklistDeleted;
+use App\Models\Category;
+use App\Models\Checklist;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +15,11 @@ use stdClass;
 
 class ChecklistRepository implements ChecklistContract
 {
+    public function __construct(
+        private Checklist $checklists,
+        private Category $categories,
+    ) {}
+
     /**
      * Lists all the checklists.
      * 
@@ -18,12 +27,10 @@ class ChecklistRepository implements ChecklistContract
      */
     public function index(): Collection
     {
-        $checklists = DB::table('checklists')
-                         ->join('categories', 'checklists.category_id', '=', 'categories.id')
-                         ->join('users', 'categories.user_id', '=', 'users.id')
-                         ->select(['checklists.*'])
-                         ->where('categories.user_id', '=', Auth::user()->id)
-                         ->get();
+        $checklists = $this->checklists::addSelect([
+            'user' => $this->categories::select('user_id')
+                                        ->whereColumn('category_id', 'categories.id'),
+        ])->get()->where('user', auth()->user()->id);
 
         return $checklists;
     }
@@ -34,17 +41,15 @@ class ChecklistRepository implements ChecklistContract
      * @param  array  $validated
      * @return bool
      */
-    public function store(array $validated): bool
+    public function store(array $validated): Checklist
     {
-        $checklist = DB::table('checklists')
-                        ->insert([
-                            'name'        => $validated['name'],
-                            'category_id' => $validated['category_id'],
-                            'slug'        => Str::slug($validated['name']),
-                            'created_at'  => now()
-                        ]);
+        $checklist = $this->checklists->create([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'category_id' => $validated['category']
+        ]);
 
-        // ChecklistCreated::dispatch($checklist);
+        ChecklistCreated::dispatch($checklist);
 
         return $checklist;
     }
@@ -55,21 +60,14 @@ class ChecklistRepository implements ChecklistContract
      * @param  string  $slug
      * @return stdClass
      */
-    public function show(string $slug): stdClass
+    public function show(string $slug): Checklist
     {
-        return DB::table('checklists')
-                  ->join('categories', 'checklists.category_id', '=', 'categories.id')
-                  ->join('users', 'categories.user_id', '=', 'users.id')
-                  ->select([
-                      'checklists.name',
-                      'categories.name as category_name',
-                      'checklists.slug',
-                      'checklists.created_at',
-                      'checklists.updated_at'
-                  ])
-                  ->where('checklists.slug', $slug)
-                  ->where('categories.user_id', Auth::user()->id)
-                  ->first();
+        $checklist =  $this->checklists::addSelect([
+            'user' => $this->categories::select('user_id')
+                                        ->whereColumn('category_id', 'categories.id'),
+        ])->get()->where('user', auth()->user()->id)->where('slug', $slug)->first();
+
+        return $checklist;
     }
 
     /**
@@ -79,29 +77,17 @@ class ChecklistRepository implements ChecklistContract
      * @param  string  $slug
      * @return stdClass
      */
-    public function update(array $validated, string $slug): stdClass
+    public function update(array $validated, string $slug): Checklist
     {
-        DB::table('checklists')
-           ->join('categories', 'checklists.category_id', '=', 'categories.id')
-           ->join('users', 'categories.user_id', '=', 'users.id')
-           ->where('checklists.slug', $slug)
-           ->where('categories.user_id', Auth::user()->id)
-           ->update([
-               'checklists.name'        => $validated['name'],
-               'checklists.slug'        => Str::slug($validated['name']),
-               'checklists.category_id' => $validated['category_id'],
-               'checklists.updated_at'  => now()
-           ]);
+        $category = $this->show($slug);
 
-        $category = DB::table('checklists')
-                       ->join('categories', 'checklists.category_id', '=', 'categories.id')
-                       ->join('users', 'categories.user_id', '=', 'users.id')
-                       ->where('checklists.slug', Str::slug($validated['name']))
-                       ->where('categories.user_id', Auth::user()->id)
-                       ->select(['checklists.name', 'checklists.slug'])
-                       ->first();
-        
-        return $category;
+        $category->update([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'category_id' => $validated['category']
+        ]);
+
+        return $category->refresh();
     }
 
     /**
@@ -114,7 +100,12 @@ class ChecklistRepository implements ChecklistContract
      */
     public function destroy(string $slug): bool
     {
-        //
+        $checklist = $this->show($slug);
+
+        $checklist->delete();
+
+        ChecklistDeleted::dispatch($checklist);
+
         return true;
     }
 }

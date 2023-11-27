@@ -23,7 +23,7 @@ class StoreChecklistRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'category_id' => ['required', 'string']
+            'category' => ['required', 'string']
         ];
     }
 }

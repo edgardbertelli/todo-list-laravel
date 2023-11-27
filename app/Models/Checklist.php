@@ -14,7 +14,7 @@ class Checklist extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name', 'slug', 'category_id'];
 
     /**
      * Get the category that owns the Checklist

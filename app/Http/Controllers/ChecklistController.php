@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChecklistRequest;
 use App\Http\Requests\UpdateChecklistRequest;
+use App\Models\Category;
+use App\Models\Checklist;
+use App\Models\User;
 use App\Services\CategoryService;
 use App\Services\ChecklistService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ChecklistController extends Controller
 {

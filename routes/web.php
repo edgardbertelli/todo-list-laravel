@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{slug}', 'show')->name('show');
                 Route::get('/{slug}/edit', 'edit')->name('edit');
                 Route::put('/{slug}', 'update')->name('update');
-                Route::delete('/slug', 'destroy')->name('destroy');
+                Route::delete('/{slug}', 'destroy')->name('destroy');
     });
     
     /**

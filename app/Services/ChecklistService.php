@@ -6,6 +6,7 @@ use App\Contracts\ChecklistContract;
 use Illuminate\Support\Collection;
 use App\Http\Requests\StoreChecklistRequest;
 use App\Http\Requests\UpdateChecklistRequest;
+use App\Models\Checklist;
 use stdClass;
 
 class ChecklistService
@@ -36,9 +37,9 @@ class ChecklistService
      * @param \App\Http\Requests\StoreChecklistRequest $request
      * @return bool
      */
-    public function store(StoreChecklistRequest $request): bool
+    public function store(StoreChecklistRequest $request): Checklist
     {
-        $validated = $request->safe()->only(['name', 'category_id']);
+        $validated = $request->safe()->only(['name', 'category']);
 
         return $this->checklists->store($validated);
     }
@@ -49,7 +50,7 @@ class ChecklistService
      * @param  string  $slug
      * @return stdClass
      */
-    public function show(string $slug): stdClass
+    public function show(string $slug): Checklist
     {
         return $this->checklists->show($slug);
     }
@@ -61,9 +62,9 @@ class ChecklistService
      * @param  string  @slug
      * @return stdClass
      */
-    public function update(UpdateChecklistRequest $request, string $slug): stdClass
+    public function update(UpdateChecklistRequest $request, string $slug): Checklist
     {
-        $validated = $request->safe()->only(['name', 'category_id']);
+        $validated = $request->safe()->only(['name', 'category']);
 
         return $this->checklists->update($validated, $slug);
     }

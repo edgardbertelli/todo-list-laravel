@@ -24,14 +24,14 @@
                         <div class="mt-4">
                             <x-input-label for="categories" value="checklists.edit_form_input_label_category" />
                             <x-forms.select id="categories" 
-                                            name="category_id"
-                                            class="@error('category_id') is-invalid @enderror"
+                                            name="category"
+                                            class="@error('category') is-invalid @enderror"
                                             required>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" @selected($checklist->category_name == $category->name)>{{ $category->name }}</option>
                                 @endforeach
                             </x-forms.select>
-                            @error('category_id')
+                            @error('category')
                                 <div class="text-red-400">{{ $message }}</div>
                             @enderror
                         </div>
