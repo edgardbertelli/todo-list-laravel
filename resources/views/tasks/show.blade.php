@@ -28,7 +28,7 @@
                         @endisset
                     </p>
                     <p><strong>{{ __('tasks.show_page_checklist') }}: </strong>{{ $task->checklist_name }}</p>
-                    <p><strong>{{ __('tasks.show_page_category') }}: </strong>{{ $task->category_name }}</p>
+                    <p><strong>{{ __('tasks.show_page_project') }}: </strong>{{ $task->project_name }}</p>
                     <p><strong>{{ __('tasks.show_page_created_at') }}: </strong>{{ $task->created_at }}</p>
                     <p><strong>{{ __('tasks.show_page_updated_at') }}: </strong>{{ $task->updated_at }}</p>
                 </div>

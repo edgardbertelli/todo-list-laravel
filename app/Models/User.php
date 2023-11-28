@@ -47,13 +47,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all of the categories for the User
+     * Get all of the projects for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function categories()
+    public function projects()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Project::class);
     }
 
     /**
@@ -63,6 +63,26 @@ class User extends Authenticatable
      */
     public function checklists()
     {
-        return $this->hasManyThrough(Checklist::class, Category::class);
+        return $this->hasMany(Checklist::class, 'user_id');
+    }
+
+    /**
+     * Get all of the tasks for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'user_id');
+    }
+
+    /**
+     * The teams that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
     }
 }

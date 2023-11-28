@@ -3,21 +3,17 @@
 namespace App\Repositories;
 
 use App\Contracts\TaskContract;
-use App\Models\Category;
+use App\Models\project;
 use App\Models\Checklist;
 use App\Models\Task;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use stdClass;
 
 class TaskRepository implements TaskContract
 {
     public function __construct(
         private Task $tasks,
         private Checklist $checklists,
-        private Category $categories,
+        private project $projects,
     ) {}
 
     /**
@@ -27,7 +23,7 @@ class TaskRepository implements TaskContract
      */
     public function index(): Collection
     {
-        return $this->tasks::all();
+        return $this->tasks::whereBelongsTo(auth()->user())->get();
     }
 
     /**
@@ -37,24 +33,26 @@ class TaskRepository implements TaskContract
      */
     public function trash(): Collection
     {
-        return $this->tasks::onlyTrashed()->get();
+        $tasks = $this->tasks::onlyTrashed()
+                              ->whereBelongsTo(auth()->user(), 'user_id')
+                              ->get();
+
+        return $tasks;
     }
 
     /**
      * Creates a new task.
      * 
      * @param  array  $validated
-     * @return bool
+     * @return \App\Models\Task
      */
-    public function store(array $validated): bool
+    public function store(array $validated): Task
     {
-
-        $task = DB::table('tasks')->insert([
-            'title'        => $validated['title'],
-            'slug'         => Str::slug($validated['title']),
-            'description'  => $validated['description'],
-            'checklist_id' => $validated['checklist_id'],
-            'created_at'   => now()
+        $task = $this->tasks->create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'user_id' => auth()->user()->id,
+            'checklist_id' => $validated['checklist_id']
         ]);
 
         return $task;
@@ -87,7 +85,6 @@ class TaskRepository implements TaskContract
         $task->update([
             'title' => $validated['title'],
             'description' => $validated['description'],
-            'slug' => Str::slug($validated['title']),
             'checklist_id' => $validated['checklist_id']
         ]);
 

@@ -16,8 +16,8 @@
                         {{ __('nav.dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
-                        {{ __('nav.categories') }}
+                    <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.*')">
+                        {{ __('nav.projects') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('checklists.index')" :active="request()->routeIs('checklists.*')">

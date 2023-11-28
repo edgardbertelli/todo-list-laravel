@@ -32,16 +32,16 @@
                     
     
                     <div class="mt-4 mb-6">
-                        <x-input-label for="categories" value="checklists.edit_form_input_label_category" />
-                        <x-forms.select id="categories" 
-                                        name="category"
-                                        class="@error('category') is-invalid @enderror"
+                        <x-input-label for="projects" value="checklists.edit_form_input_label_project" />
+                        <x-forms.select id="projects" 
+                                        name="project"
+                                        class="@error('project') is-invalid @enderror"
                                         required>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" @selected($checklist->category_name == $category->name)>{{ $category->name }}</option>
+                            @foreach ($projects as $project)
+                                <option value="{{ $project->id }}" @selected($checklist->project_name == $project->name)>{{ $project->name }}</option>
                             @endforeach
                         </x-forms.select>
-                        @error('category')
+                        @error('project')
                             <div class="text-red-400">{{ $message }}</div>
                         @enderror
                     </div>

@@ -1,14 +1,14 @@
 <x-app-layout>
     
-    @include('categories.header')
+    @include('projects.header')
 
-    @section('title', 'Categories')
+    @section('title', 'projects')
 
     <x-container>
         <div class="mb-4">
-            <x-link href="{{ route('categories.index') }}">
+            <x-link href="{{ route('projects.index') }}">
                 <x-secondary-button>
-                    {{ __('categories.back_button') }}
+                    {{ __('projects.back_button') }}
                 </x-secondary-button>
             </x-link>
         </div>
@@ -17,10 +17,10 @@
             <div>
                 <x-card>
                     <div class="p-6">
-                        <x-forms.form action="{{ route('categories.store') }}"
+                        <x-forms.form action="{{ route('projects.store') }}"
                                       method="POST"
                                       novalidate>
-                            <x-input-label for="name" value="categories.create_form_input_label_name" />
+                            <x-input-label for="name" value="projects.create_form_input_label_name" />
             
                             <x-text-input id="name"
                                           name="name"
@@ -31,7 +31,7 @@
             
                             <div class="mt-4">
                                 <x-primary-button>
-                                    {{ __('categories.create_form_submit_button') }}
+                                    {{ __('projects.create_form_submit_button') }}
                                 </x-primary-button>
                             </div>
                         </x-forms.form>
@@ -49,10 +49,10 @@
                     </div>
 
                     <div class="table-row-group">
-                        @foreach ($categories as $category)
+                        @foreach ($projects as $project)
                             <div class="table-row">
-                                <div class="table-cell">{{ $category->name }}</div>
-                                <div class="table-cell">{{ $category->created_at }}</div>
+                                <div class="table-cell">{{ $project->name }}</div>
+                                <div class="table-cell">{{ $project->created_at }}</div>
                             </div>
                         @endforeach
                     </div>

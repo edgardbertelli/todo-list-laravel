@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('slug');
-            $table->foreignUuid('checklist_id');
+            $table->string('title')->index();
+            $table->tinyText('description')->nullable();
+            $table->timestamp('deadline');
             $table->timestamps();
             $table->softDeletes();
+        });
+        
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->foreignUuid('user_id');
+            $table->foreignUuid('checklist_id');
         });
     }
 

@@ -2,8 +2,8 @@
 
 return [
     'header' => 'Categorias',
-    'create_category_button' => 'Criar categoria',
-    'category_trash_button' => 'Lixeira',
+    'create_project_button' => 'Criar categoria',
+    'project_trash_button' => 'Lixeira',
     'trash_restore_button' => 'Recuperar',
     'trash_force_button' => 'Remover permanentemente',
     'delete_confirm_message' => 'Você tem certeza de que quer remover esta categoria?',

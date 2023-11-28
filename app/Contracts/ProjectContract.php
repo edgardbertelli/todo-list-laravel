@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface CategoryContract
+interface ProjectContract
 {
     public function index();
     public function trash();

@@ -17,14 +17,14 @@
             </x-card>
         </x-container>
 
-        {{-- Categories list --}}
+        {{-- projects list --}}
         <x-container>
             <x-card>
                 <div class="p-6">
-                    <h2 class="font-semibold">{{ __('Categories') }}</h2>
+                    <h2 class="font-semibold">{{ __('projects') }}</h2>
                     <ol class="list-decimal">
-                        @foreach ($categories as $category)
-                            <li>{{ __("{$category->name} - {$category->created_at}") }}</li>
+                        @foreach ($projects as $project)
+                            <li>{{ __("{$project->name} - {$project->created_at}") }}</li>
                         @endforeach
                     </ol>
                 </div>
@@ -69,10 +69,10 @@
                 <div class="p-6">
                     <h2 class="font-semibold">{{ __('Map') }}</h2>
                     <ol class="list-decimal">
-                        @foreach ($categories as $category)
-                            <li>{{ $category->name }}
+                        @foreach ($projects as $project)
+                            <li>{{ $project->name }}
                                 <ol class="list-decimal">
-                                    @foreach ($category->checklists as $checklist)
+                                    @foreach ($project->checklists as $checklist)
                                         <li class="ml-4">{{ $checklist->name }}
                                             <ol class="list-decimal">
                                                 @foreach ($checklist->tasks as $task)

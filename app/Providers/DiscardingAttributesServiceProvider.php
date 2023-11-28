@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
+use App\Models\project;
 use App\Models\Checklist;
 use App\Models\Task;
 use Illuminate\Support\ServiceProvider;
@@ -22,8 +22,8 @@ class DiscardingAttributesServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Category::preventsSilentlyDiscardingAttributes($this->app->isLocal());
-        Category::preventSilentlyDiscardingAttributes($this->app->isLocal());
+        project::preventsSilentlyDiscardingAttributes($this->app->isLocal());
+        project::preventSilentlyDiscardingAttributes($this->app->isLocal());
         Checklist::preventSilentlyDiscardingAttributes($this->app->isLocal());
         Task::preventSilentlyDiscardingAttributes($this->app->isLocal());
     }

@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\CategoryService;
+use App\Services\ProjectService;
 use App\Services\ChecklistService;
 use App\Services\TaskService;
 use Barryvdh\DomPDF\Facade\Pdf;

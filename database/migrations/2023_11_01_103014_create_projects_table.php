@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('checklists', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name', 20)->index();
+            $table->string('name')->index();
             $table->tinyText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-        
-        Schema::table('checklists', function (Blueprint $table) {
-            $table->foreignUuid('project_id');
+
+        Schema::table('projects', function (Blueprint $table) {
             $table->foreignUuid('user_id');
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('checklists');
+        Schema::dropIfExists('projects');
     }
 };

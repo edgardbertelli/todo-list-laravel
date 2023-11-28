@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\ReportContract;
 use App\Jobs\ProcessReport;
-use App\Models\Category;
+use App\Models\project;
 use App\Models\Checklist;
 use App\Models\Task;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class ReportRepository implements ReportContract
 {
     public function __construct(
-        private Category $categories,
+        private project $projects,
         private Checklist $checklists,
         private Task $tasks,
     ) {}
@@ -23,12 +23,12 @@ class ReportRepository implements ReportContract
      */
     public function make()
     {
-        $categories = $this->categories::where('user_id', Auth::user()->id)->get();
+        $projects = $this->projects::where('user_id', Auth::user()->id)->get();
         $checklists = $this->checklists::all();
         $tasks = $this->tasks::all();
 
         $pdf = Pdf::loadView('pdf.report', [
-            'categories' => $categories,
+            'projects' => $projects,
             'checklists' => $checklists,
             'tasks'      => $tasks
         ]);

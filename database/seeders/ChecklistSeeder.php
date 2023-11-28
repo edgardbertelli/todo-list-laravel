@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 
 class ChecklistSeeder extends Seeder
 {
+    use WithoutModelEvents;
+    
     /**
      * Run the database seeds.
      */

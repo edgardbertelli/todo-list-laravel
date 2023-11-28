@@ -52,9 +52,9 @@ class ChecklistObserver
      */
     public function forceDeleted(Checklist $checklist): void
     {
-        Log::info("You have permanently deleted the \"{checklist}\" checklist in the \"{category}\" category,", [
+        Log::info("You have permanently deleted the \"{checklist}\" checklist in the \"{project}\" project,", [
             'checklist' => $checklist->name,
-            'category'  => $checklist->category->name
+            'project'  => $checklist->project->name
         ]);
     }
 }

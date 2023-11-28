@@ -57,7 +57,7 @@ class ChecklistService
      */
     public function store(StoreChecklistRequest $request): Checklist
     {
-        $validated = $request->safe()->only(['name', 'category']);
+        $validated = $request->safe()->only(['name', 'project']);
 
         return $this->checklists->store($validated);
     }
@@ -82,7 +82,7 @@ class ChecklistService
      */
     public function update(UpdateChecklistRequest $request, string $id): Checklist
     {
-        $validated = $request->safe()->only(['name', 'category']);
+        $validated = $request->safe()->only(['name', 'project']);
 
         return $this->checklists->update($validated, $id);
     }

@@ -16,16 +16,26 @@ class Checklist extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'category_id'];
+    protected $fillable = ['name', 'project_id', 'user_id'];
 
     /**
-     * Get the category that owns the Checklist
+     * Get the project that owns the Checklist
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category()
+    public function project()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(project::class)->withDefault();
+    }
+
+    /**
+     * Get the user that owns the Checklist
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

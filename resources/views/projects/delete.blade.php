@@ -1,8 +1,8 @@
 <x-app-layout>
     
-    @include('categories.header')
+    @include('projects.header')
 
-    @section('title', 'Categories')
+    @section('title', 'projects')
 
     <x-container>
 
@@ -13,9 +13,9 @@
             @endif
 
             <div class="mb-4">
-                <x-link href="{{ route('categories.show', $category->id) }}">
+                <x-link href="{{ route('projects.show', $project->id) }}">
                     <x-secondary-button>
-                        {{ __('categories.back_button') }}
+                        {{ __('projects.back_button') }}
                     </x-secondary-button>
                 </x-link>
             </div>
@@ -23,18 +23,18 @@
             <x-card>
                 <div class="p-6">
                     <div class="mb-6">
-                        <p><strong>{{ __('categories.show_page_name') }}: </strong>{{ $category->name }}</p>
-                        <p><strong>{{ __('categories.show_page_created_at') }}: </strong>{{ $category->created_at }}</p>
-                        <p><strong>{{ __('categories.show_page_updated_at') }}: </strong>{{ $category->updated_at }}</p>
+                        <p><strong>{{ __('projects.show_page_name') }}: </strong>{{ $project->name }}</p>
+                        <p><strong>{{ __('projects.show_page_created_at') }}: </strong>{{ $project->created_at }}</p>
+                        <p><strong>{{ __('projects.show_page_updated_at') }}: </strong>{{ $project->updated_at }}</p>
                     </div>
 
-                    <p class="mb-6">{{ __('categories.delete_confirm_message') }}</p>
+                    <p class="mb-6">{{ __('projects.delete_confirm_message') }}</p>
                     
                     <div>
-                        <x-forms.form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                        <x-forms.form action="{{ route('projects.destroy', $project->id) }}" method="POST">
                             @method('DELETE')
                             <x-danger-button type="submit">
-                                {{ __('categories.show_page_remove_button') }}
+                                {{ __('projects.show_page_remove_button') }}
                             </x-danger-button>
                         </x-forms.form>
                     </div>

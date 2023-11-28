@@ -2,7 +2,7 @@
 
 return [
     'dashboard'  => 'Dashboard',
-    'categories' => 'Categorias',
+    'projects' => 'Categorias',
     'checklists' => 'Checklists',
     'tasks'      => 'Tarefas',
     'settings'   => 'Configurações',

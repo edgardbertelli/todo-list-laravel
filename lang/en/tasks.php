@@ -14,7 +14,7 @@ return [
     'show_page_title' => 'Title',
     'show_page_description' => 'Description',
     'show_page_checklist' => 'Checklist',
-    'show_page_category' => 'Category',
+    'show_page_project' => 'project',
     'show_page_created_at' => 'Created at',
     'show_page_updated_at' => 'Updated at',
     'show_page_edit_button' => 'Update',

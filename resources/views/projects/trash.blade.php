@@ -1,38 +1,38 @@
 <x-app-layout>
 
-    @include('categories.header')
+    @include('projects.header')
 
-    @section('title', 'Categories')
+    @section('title', 'projects')
 
     <x-container>
 
-        <x-link href="{{ route('categories.index') }}">
+        <x-link href="{{ route('projects.index') }}">
             <x-secondary-button type="button">
-                {{ __('categories.back_button') }}
+                {{ __('projects.back_button') }}
             </x-secondary-button>
         </x-link>
 
-        @if ($categories->count() === 0)
+        @if ($projects->count() === 0)
             <x-alert class="bg-yellow-200">
-                <p>I'm sorry, {{ Auth::user()->name }}. You don't have any categories registered yet.<br>
-                    But go ahead and <b><a href="{{ route('categories.create') }}">click here</a></b> to create a new one
+                <p>I'm sorry, {{ Auth::user()->name }}. You don't have any projects registered yet.<br>
+                    But go ahead and <b><a href="{{ route('projects.create') }}">click here</a></b> to create a new one
                     right now.
                 </p>
             </x-alert>
         @else
             <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-6">
-                @foreach ($categories as $category)
-                    <x-card title="{{ $category->name }}">
+                @foreach ($projects as $project)
+                    <x-card title="{{ $project->name }}">
                         <div class="flex justify-between">
                             <div class="text-gray-400">
-                                {{ $category->name }}
+                                {{ $project->name }}
                             </div>
                             <div>
-                                <x-forms.form action="{{ route('categories.restore', $category->id) }}"
+                                <x-forms.form action="{{ route('projects.restore', $project->id) }}"
                                     method="POST">
                                     @method('PUT')
                                     <x-secondary-button type="submit"
-                                        title="{{ __('categories.trash_restore_button') }}">
+                                        title="{{ __('projects.trash_restore_button') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -40,10 +40,10 @@
                                         </svg>
                                     </x-secondary-button>
                                 </x-forms.form>
-                                <x-forms.form action="{{ route('categories.force', $category->id) }}"
+                                <x-forms.form action="{{ route('projects.force', $project->id) }}"
                                     method="POST">
                                     @method('DELETE')
-                                    <x-danger-button type="submit" title="{{ __('categories.trash_force_button') }}">
+                                    <x-danger-button type="submit" title="{{ __('projects.trash_force_button') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
                                             <path stroke-linecap="round" stroke-linejoin="round"

@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'header' => 'Categories',
-    'create_category_button' => 'Create category',
-    'category_trash_button' => 'Trash',
+    'header' => 'projects',
+    'create_project_button' => 'Create project',
+    'project_trash_button' => 'Trash',
     'trash_force_button' => 'Delete permanently',
     'trash_restore_button' => 'restore',
-    'delete_confirm_message' => 'Are you sure you want to remove this category?',
+    'delete_confirm_message' => 'Are you sure you want to remove this project?',
     'create_form_input_label_name' => 'Name',
     'create_form_submit_button' => 'Create',
     'back_button' => 'Back',

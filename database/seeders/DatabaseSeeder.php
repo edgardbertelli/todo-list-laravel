@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
 use App\Models\Checklist;
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()
-                     ->has(Category::factory()
+                     ->has(Project::factory()
                                        ->has(
                                           Checklist::factory()->has(
                                                                  Task::factory()->count(10))
@@ -34,7 +35,7 @@ class DatabaseSeeder extends Seeder
                     ]);
 
         $user = User::factory()
-                     ->has(Category::factory()->count(7))
+                     ->has(Project::factory()->count(7))
                      ->create([
                         'name' => 'Lenira',
                         'email' => 'lenirabertelli@gmail.com',
@@ -42,7 +43,7 @@ class DatabaseSeeder extends Seeder
                     ]);
 
         $user = User::factory()
-                    ->has(Category::factory()->count(13))
+                    ->has(Project::factory()->count(13))
                     ->create([
                         'name' => 'Bira',
                         'email' => 'birapereira@gmail.com',
@@ -51,7 +52,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory(100)->create();
 
-        Category::factory()->count(10)->create([
+        Project::factory()->count(10)->create([
             'user_id' => $user->id
         ]);
     }

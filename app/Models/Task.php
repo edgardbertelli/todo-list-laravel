@@ -16,7 +16,7 @@ class Task extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'slug', 'checklist_id'];
+    protected $fillable = ['title', 'description', 'checklist_id', 'user_id'];
 
     /**
      * Get the checklist that owns the Task
@@ -25,6 +25,16 @@ class Task extends Model
      */
     public function checklist()
     {
-        return $this->belongsTo(Checklist::class);
+        return $this->belongsTo(Checklist::class)->withDefault();
+    }
+
+    /**
+     * Get the user that owns the Task
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

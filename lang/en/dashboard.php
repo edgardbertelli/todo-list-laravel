@@ -3,7 +3,7 @@
 return [
     'download_report_button' => 'Download report',
     'header' => 'Dashboard',
-    'categories' => 'Categories',
+    'projects' => 'projects',
     'checklists' => 'Checklists',
     'tasks' => 'Tasks'
 ];

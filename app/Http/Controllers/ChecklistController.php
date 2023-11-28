@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChecklistRequest;
 use App\Http\Requests\UpdateChecklistRequest;
-use App\Models\Category;
+use App\Models\project;
 use App\Models\Checklist;
 use App\Models\User;
-use App\Services\CategoryService;
+use App\Services\ProjectService;
 use App\Services\ChecklistService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -19,12 +19,12 @@ class ChecklistController extends Controller
      * Instantiates the checklist service.
      * 
      * @param  \App\Services\ChecklistService  $checklists
-     * @param  \App\Services\CategoryService  $categories
+     * @param  \App\Services\ProjectService  $projects
      * @return void
      */
     public function __construct(
         private ChecklistService $checklists,
-        private CategoryService $categories,
+        private ProjectService $projects,
     ) {
         $this->middleware('auth');
         $this->middleware('localized')->except(['store', 'update', 'destroy']);
@@ -78,10 +78,10 @@ class ChecklistController extends Controller
      */
     public function create(): View
     {
-        $categories = $this->categories->index();
+        $projects = $this->projects->index();
 
         return view('checklists.create', [
-            'categories' => $categories
+            'projects' => $projects
         ]);
     }
 
@@ -123,11 +123,11 @@ class ChecklistController extends Controller
     public function edit(string $id): View
     {
         $checklist = $this->checklists->show($id);
-        $categories = $this->categories->index();
+        $projects = $this->projects->index();
 
         return view('checklists.edit', [
             'checklist' => $checklist,
-            'categories' => $categories,
+            'projects' => $projects,
         ]);
     }
 

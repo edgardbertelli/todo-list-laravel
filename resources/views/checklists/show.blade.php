@@ -20,7 +20,7 @@
             <div class="p-6">
                 <div class="mb-6">
                     <p><strong>{{ __('checklists.show_page_name') }}: </strong>{{ $checklist->name }}</p>
-                    <p><strong>{{ __('checklists.show_page_category') }}: </strong>{{ $checklist->category->name }}</p>
+                    <p><strong>{{ __('checklists.show_page_project') }}: </strong>{{ $checklist->project->name }}</p>
                     <p><strong>{{ __('checklists.show_page_created_at') }}: </strong>{{ $checklist->created_at }}</p>
                     <p><strong>{{ __('checklists.show_page_updated_at') }}: </strong>{{ $checklist->updated_at }}</p>
                 </div>

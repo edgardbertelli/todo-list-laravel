@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Category;
+use App\Models\project;
 use App\Models\Checklist;
 use App\Models\Task;
-use App\Observers\CategoryObserver;
+use App\Observers\projectObserver;
 use App\Observers\ChecklistObserver;
 use App\Observers\TaskObserver;
 use Illuminate\Auth\Events\Registered;
@@ -30,7 +30,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Category::observe(CategoryObserver::class);
+        project::observe(projectObserver::class);
         Checklist::observe(ChecklistObserver::class);
         Task::observe(TaskObserver::class);
     }

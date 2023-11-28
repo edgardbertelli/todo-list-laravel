@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\project;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Checklist>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\project>
  */
-class ChecklistFactory extends Factory
+class ProjectFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,8 +19,7 @@ class ChecklistFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'project_id' => project::all()->random(),
-            'user_id' => User::all()->random()
+            'user_id' => User::all()->random(),
         ];
     }
 }

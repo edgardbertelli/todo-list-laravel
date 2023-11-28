@@ -3,17 +3,16 @@
 namespace App\Repositories;
 
 use App\Contracts\ChecklistContract;
-use App\Models\Category;
+use App\Models\project;
 use App\Models\Checklist;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use stdClass;
 
 class ChecklistRepository implements ChecklistContract
 {
     public function __construct(
         private Checklist $checklists,
-        private Category $categories,
+        private project $projects,
     ) {}
 
     /**
@@ -23,10 +22,7 @@ class ChecklistRepository implements ChecklistContract
      */
     public function index(): Collection
     {
-        $checklists = $this->checklists::addSelect([
-            'user' => $this->categories::select('user_id')
-                                        ->whereColumn('category_id', 'categories.id'),
-        ])->get()->where('user', auth()->user()->id);
+        $checklists = $this->checklists::whereBelongsTo(auth()->user())->get();
 
         return $checklists;
     }
@@ -34,25 +30,24 @@ class ChecklistRepository implements ChecklistContract
     /**
      * Lists all the trashed checklists.
      */
-    public function trash()
+    public function trash(): Collection
     {
-        return $this->checklists::onlyTrashed()->addSelect([
-            'user' => $this->categories::select('user_id')
-                                        ->whereColumn('category_id', 'categories.id'),
-        ])->get()->where('user', auth()->user()->id);
+        $checklists = $this->checklists::onlyTrashed()
+                                        ->whereBelongsTo(auth()->user())
+                                        ->get();
+
+        return $checklists;
     }
 
     /**
      * Restores a checklist.
      * 
      * @param  string  $id
+     * @return \App\Models\Checklist
      */
-    public function restore(string $id)
+    public function restore(string $id): Checklist
     {
-        $checklist =  $this->checklists::onlyTrashed()->addSelect([
-            'user' => $this->categories::select('user_id')
-                                        ->whereColumn('category_id', 'categories.id'),
-        ])->get()->where('user', auth()->user()->id)->where('id', $id)->firstOrFail();
+        $checklist = $this->checklists::onlyTrashed()->findOrFail($id);
 
         return $checklist->restore();
     }
@@ -67,8 +62,8 @@ class ChecklistRepository implements ChecklistContract
     {
         $checklist = $this->checklists->create([
             'name' => $validated['name'],
-            'slug' => Str::slug($validated['name']),
-            'category_id' => $validated['category']
+            'project_id' => $validated['project'],
+            'user_id' => auth()->user()->id
         ]);
 
         return $checklist;
@@ -82,10 +77,7 @@ class ChecklistRepository implements ChecklistContract
      */
     public function show(string $id): Checklist
     {
-        $checklist =  $this->checklists::addSelect([
-            'user' => $this->categories::select('user_id')
-                                        ->whereColumn('category_id', 'categories.id'),
-        ])->get()->where('user', auth()->user()->id)->where('id', $id)->firstOrFail();
+        $checklist = $this->checklists::findOrFail($id);
 
         return $checklist;
     }
@@ -99,12 +91,11 @@ class ChecklistRepository implements ChecklistContract
      */
     public function update(array $validated, string $id): Checklist
     {
-        $checklist = $this->show($id);
+        $checklist = $this->checklists::findOrFail($id);
 
         $checklist->update([
             'name' => $validated['name'],
-            'slug' => Str::slug($validated['name']),
-            'category_id' => $validated['category']
+            'project_id' => $validated['project']
         ]);
 
         return $checklist->refresh();
@@ -113,18 +104,14 @@ class ChecklistRepository implements ChecklistContract
     /**
      * Deletes a checklist.
      * 
-     * @todo   Implement the removal of a checklist.
-     * @todo   Implement the dispatch of a task removal (event log).
      * @param  string  $id
      * @return bool
      */
     public function destroy(string $id): bool
     {
-        $checklist = $this->show($id);
+        $checklist = $this->checklists::findOrFail($id);
 
-        $checklist->delete();
-
-        return true;
+        return $checklist->delete();
     }
 
     /**
@@ -135,10 +122,7 @@ class ChecklistRepository implements ChecklistContract
      */
     public function force(string $id): bool
     {
-        $checklist =  $this->checklists::onlyTrashed()->addSelect([
-            'user' => $this->categories::select('user_id')
-                                        ->whereColumn('category_id', 'categories.id'),
-        ])->get()->where('user', auth()->user()->id)->where('id', $id)->firstOrFail();
+        $checklist = $this->checklists::findOrFail($id);
 
         return $checklist->forceDelete();
     }

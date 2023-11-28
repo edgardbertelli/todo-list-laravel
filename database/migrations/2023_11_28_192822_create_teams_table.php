@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('slug');
+            $table->string('name')->index();
+            $table->text('description')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
 
-        Schema::table('categories', function (Blueprint $table) {
-            $table->foreignUuid('user_id')->references('id')->on('users');
+        Schema::table('teams', function (Blueprint $table) {
+            $table->foreignUuid('uesr_id');
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('teams');
     }
 };

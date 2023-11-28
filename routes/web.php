@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocaleController;
@@ -36,9 +36,9 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::controller(CategoryController::class)
-      ->prefix('/categories')
-      ->name('categories.')
+Route::controller(ProjectController::class)
+      ->prefix('/projects')
+      ->name('projects.')
       ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/trash', 'trash')->name('trash');
