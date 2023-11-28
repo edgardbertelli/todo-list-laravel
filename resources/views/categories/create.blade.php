@@ -8,7 +8,7 @@
         <div class="mb-4">
             <x-link href="{{ route('categories.index') }}">
                 <x-secondary-button>
-                    {{ __('categories.create_form_back_button') }}
+                    {{ __('categories.back_button') }}
                 </x-secondary-button>
             </x-link>
         </div>
