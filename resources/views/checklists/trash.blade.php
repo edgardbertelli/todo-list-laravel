@@ -2,8 +2,6 @@
 
     @include('checklists.header')
 
-    @section('title', 'checklists')
-
     <x-container>
 
         <x-link href="{{ route('checklists.index') }}">

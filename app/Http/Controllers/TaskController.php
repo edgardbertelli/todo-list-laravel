@@ -23,7 +23,7 @@ class TaskController extends Controller
         private ChecklistService $checklists
     ) {
         $this->middleware('auth');
-        $this->middleware('localized')->except(['store', 'update', 'destroy']);
+        $this->middleware('localized')->except(['store', 'update', 'destroy', 'force', 'restore']);
     }
 
     /**

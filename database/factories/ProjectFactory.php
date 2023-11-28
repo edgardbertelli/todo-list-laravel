@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,9 @@ class ProjectFactory extends Factory
     {
         return [
             'name' => fake()->word(),
+            'description' => fake()->text(),
             'user_id' => User::all()->random(),
+            'team_id' => Team::all()->random()
         ];
     }
 }

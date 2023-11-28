@@ -21,6 +21,7 @@ return new class extends Migration
 
         Schema::table('projects', function (Blueprint $table) {
             $table->foreignUuid('user_id');
+            $table->foreignUuid('team_id');
         });
     }
 

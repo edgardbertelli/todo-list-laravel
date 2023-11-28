@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Team;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
+use App\Services\TeamService;
 
 class TeamController extends Controller
 {
+    public function __construct(
+        private TeamService $teams
+    ) {
+        $this->middleware('auth');
+        $this->middleware('localized')->except(['store', 'update', 'destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $teams = $this->teams->index();
+
+        return view('teams.index', compact(['teams']));
     }
 
     /**

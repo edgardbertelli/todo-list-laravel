@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,6 +93,8 @@ Route::controller(TaskController::class)
             Route::delete('/{id}', 'destroy')->name('destroy');
             Route::delete('/{id}/force', 'force')->name('force');
 });
+
+Route::resource('teams', TeamController::class);
 
 /**
  * The reports routes.

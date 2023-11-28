@@ -2,8 +2,6 @@
     
     @include('checklists.header')
 
-    @section('title', 'Checklists')
-
     <x-container>
 
             @if (session('status_message'))

@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Category;
 use App\Models\Checklist;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()
+                     ->has(Team::factory()->count(2))
+                     ->hasAttached(Team::factory()->count(5))
                      ->has(Project::factory()
                                        ->has(
                                           Checklist::factory()->has(
@@ -35,6 +37,8 @@ class DatabaseSeeder extends Seeder
                     ]);
 
         $user = User::factory()
+                     ->has(Team::factory()->count(2))
+                     ->hasAttached(Team::factory()->count(5))
                      ->has(Project::factory()->count(7))
                      ->create([
                         'name' => 'Lenira',
@@ -43,6 +47,8 @@ class DatabaseSeeder extends Seeder
                     ]);
 
         $user = User::factory()
+                    ->has(Team::factory()->has(Project::factory()->count(2))->count(2))
+                    ->hasAttached(Team::factory()->count(5))
                     ->has(Project::factory()->count(13))
                     ->create([
                         'name' => 'Bira',

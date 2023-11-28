@@ -27,7 +27,7 @@ class ChecklistController extends Controller
         private ProjectService $projects,
     ) {
         $this->middleware('auth');
-        $this->middleware('localized')->except(['store', 'update', 'destroy']);
+        $this->middleware('localized')->except(['store', 'update', 'destroy', 'force', 'restore']);
     }
 
     /**

@@ -47,4 +47,14 @@ class Project extends Model
     {
         return $this->hasManyThrough(Tasks::class, Checklist::class);
     }
+
+    /**
+     * Get the team that owns the Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

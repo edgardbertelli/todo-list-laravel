@@ -16,4 +16,24 @@ class Team extends Model
      * @var array
      */
     protected $fillable = ['name', 'description', 'user_id'];
+
+    /**
+     * Get the users that owns the Team
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }
+
+    /**
+     * Get all of the projects for the Team
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

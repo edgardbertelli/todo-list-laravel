@@ -2,8 +2,6 @@
     
     @include('tasks.header')
 
-    @section('title', 'tasks')
-
     <x-container>
 
             @if (session('status_message'))

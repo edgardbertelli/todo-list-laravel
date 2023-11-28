@@ -2,8 +2,6 @@
 
     @include('tasks.header')
 
-    @section('title', 'tasks')
-
     <x-container>
 
         <x-link href="{{ route('tasks.index') }}">

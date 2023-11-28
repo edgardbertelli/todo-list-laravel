@@ -1,6 +1,6 @@
 <x-app-layout>
     
-    @include('projects.header')
+    @include('teams.header')
 
     <x-container>
 
@@ -11,9 +11,9 @@
             @endif
 
             <div class="mb-4">
-                <x-link href="{{ route('projects.index') }}">
+                <x-link href="{{ route('teams.index') }}">
                     <x-secondary-button>
-                        {{ __('projects.back_button') }}
+                        {{ __('teams.back_button') }}
                     </x-secondary-button>
                 </x-link>
             </div>
@@ -21,24 +21,24 @@
             <x-card>
                 <div class="p-6">
                     <div class="mb-6">
-                        <p><strong>{{ __('projects.show_page_name') }}: </strong>{{ $project->name }}</p>
-                        <p><strong>{{ __('projects.show_page_created_at') }}: </strong>{{ $project->created_at }}</p>
-                        <p><strong>{{ __('projects.show_page_updated_at') }}: </strong>{{ $project->updated_at }}</p>
+                        <p><strong>{{ __('teams.show_page_name') }}: </strong>{{ $project->name }}</p>
+                        <p><strong>{{ __('teams.show_page_created_at') }}: </strong>{{ $project->created_at }}</p>
+                        <p><strong>{{ __('teams.show_page_updated_at') }}: </strong>{{ $project->updated_at }}</p>
                     </div>
 
                     <div class="flex justify-between">
                         <div>
-                            <a href="{{ route('projects.edit', $project->id) }}">
+                            <a href="{{ route('teams.edit', $project->id) }}">
                                 <x-primary-button>
-                                    {{ __('projects.show_page_edit_button') }}
+                                    {{ __('teams.show_page_edit_button') }}
                                 </x-primary-button>
                             </a>
                         </div>
     
                         <div>
-                            <x-link href="{{ route('projects.delete', $project->id) }}">
+                            <x-link href="{{ route('teams.delete', $project->id) }}">
                                 <x-danger-button>
-                                    {{ __('projects.show_page_remove_button') }}
+                                    {{ __('teams.show_page_remove_button') }}
                                 </x-danger-button>
                             </x-link>
                         </div>

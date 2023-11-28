@@ -2,8 +2,6 @@
     
     @include('projects.header')
 
-    @section('title', 'projects')
-
     <x-container>
 
             @if (session('status_message'))

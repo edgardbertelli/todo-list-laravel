@@ -2,9 +2,10 @@
 
 return [
     'dashboard'  => 'Dashboard',
-    'projects' => 'Categorias',
+    'projects'   => 'Projetos',
     'checklists' => 'Checklists',
     'tasks'      => 'Tarefas',
+    'teams'      => 'Teams',
     'settings'   => 'Configurações',
     'profile'    => 'Perfil',
     'log_out'    => 'Sair'

@@ -2,8 +2,6 @@
     
     @include('projects.header')
 
-    @section('title', 'projects')
-
     <x-container>
         @if (session('status_message'))
             <x-alert class="bg-green-200 mb-6">
@@ -45,11 +43,22 @@
         @else
             <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-6">
                 @foreach ($projects as $project)
-                    <x-link href="{{ route('projects.show', $project->id) }}">
-                        <x-card title="{{ $project->name }}">
-                            {{ $project->name }}
+                <x-card title="{{ $project->name }}">
+                            <div class="text-lg">
+                                <x-link href="{{ route('projects.show', $project->id) }}">
+                                    <p><strong>{{ $project->name }}</strong></p>
+                                </x-link>
+                            </div>
+                            @isset($project->description)
+                                <div class="text-sm mt-4">
+                                    {{ $project->description }}
+                                </div>
+                            @endisset
+                            <div class="text-xs text-gray-400 mt-4">
+                                <p>{{ __("Criado por {$project->user->name}") }}</p>
+                                <p>{{ __("Desenvolvido por {$project->team->name}") }}</p>
+                            </div>
                         </x-card>
-                    </x-link>
                 @endforeach
             </div>            
         @endif
