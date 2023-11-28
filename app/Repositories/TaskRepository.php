@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Contracts\TaskContract;
-use App\Events\TaskCreated;
-use App\Events\TaskDeleted;
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Checklist;
+use App\Models\Task;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +14,12 @@ use stdClass;
 
 class TaskRepository implements TaskContract
 {
+    public function __construct(
+        private Task $tasks,
+        private Checklist $checklists,
+        private Category $categories,
+    ) {}
+
     /**
      * Lists all the tasks.
      * 
@@ -21,7 +27,7 @@ class TaskRepository implements TaskContract
      */
     public function index(): Collection
     {
-        return DB::table('tasks')->get();
+        return auth()->user()->categories->checklists->tasks;
     }
 
     /**
@@ -40,8 +46,6 @@ class TaskRepository implements TaskContract
             'checklist_id' => $validated['checklist_id'],
             'created_at'   => now()
         ]);
-
-        // TaskCreated::dispatch($task);
 
         return $task;
     }
@@ -116,8 +120,6 @@ class TaskRepository implements TaskContract
                    ->where('categories.user_id', Auth::user()->id)
                    ->delete();
         
-        // TaskDeleted::dispatch($task);
-
         return $task;
     }
 }

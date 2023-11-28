@@ -47,36 +47,36 @@ class ChecklistService
     /**
      * Returns a checklist.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return stdClass
      */
-    public function show(string $slug): Checklist
+    public function show(string $id): Checklist
     {
-        return $this->checklists->show($slug);
+        return $this->checklists->show($id);
     }
 
     /**
      * Updates a checklist.
      * 
      * @param  \App\Http\Requests\UpdateChecklistRequest  $request
-     * @param  string  @slug
+     * @param  string  @id
      * @return stdClass
      */
-    public function update(UpdateChecklistRequest $request, string $slug): Checklist
+    public function update(UpdateChecklistRequest $request, string $id): Checklist
     {
         $validated = $request->safe()->only(['name', 'category']);
 
-        return $this->checklists->update($validated, $slug);
+        return $this->checklists->update($validated, $id);
     }
 
     /**
      * Removes a checklist.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return bool
      */
-    public function destroy(string $slug): bool
+    public function destroy(string $id): bool
     {
-        return $this->checklists->destroy($slug);
+        return $this->checklists->destroy($id);
     }
 }

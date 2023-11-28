@@ -22,6 +22,7 @@ class TaskController extends Controller
         private TaskService $tasks,
         private ChecklistService $checklists
     ) {
+        $this->middleware('auth');
         $this->middleware('localized')->except(['store', 'update', 'destroy']);
     }
 
@@ -33,6 +34,8 @@ class TaskController extends Controller
     public function index(): View
     {
         $tasks = $this->tasks->index();
+
+        $tasks->dd();
 
         return view('tasks.index', [
             'tasks' => $tasks
@@ -70,12 +73,12 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Contracts\View\View
      */
-    public function show(string $slug): View
+    public function show(string $id): View
     {
-        $task = $this->tasks->show($slug);
+        $task = $this->tasks->show($id);
 
         return view('tasks.show', [
             'task' => $task
@@ -85,12 +88,12 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Contracts\View\View
      */
-    public function edit(string $slug): View
+    public function edit(string $id): View
     {
-        $task = $this->tasks->show($slug);
+        $task = $this->tasks->show($id);
         $checklists = $this->checklists->index();
 
         return view('tasks.edit', [
@@ -103,27 +106,27 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      * 
      * @param  \App\Http\Requests\UpdateTaskRequest  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTaskRequest $request, string $slug): RedirectResponse
+    public function update(UpdateTaskRequest $request, string $id): RedirectResponse
     {
-        $updatedTask = $this->tasks->update($request, $slug);
+        $updatedTask = $this->tasks->update($request, $id);
 
         return redirect()->route('tasks.show', [
-            'slug' => $updatedTask->slug
+            'id' => $updatedTask->id
         ])->with('status_message', 'The task has been update succesfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $slug): RedirectResponse
+    public function destroy(string $id): RedirectResponse
     {
-        $this->tasks->destroy($slug);
+        $this->tasks->destroy($id);
 
         return redirect()->route('tasks.index')
                          ->with('status_message', 'The task has been removed succesfully!');

@@ -26,6 +26,7 @@ class ChecklistController extends Controller
         private ChecklistService $checklists,
         private CategoryService $categories,
     ) {
+        $this->middleware('auth');
         $this->middleware('localized')->except(['store', 'update', 'destroy']);
     }
 
@@ -74,12 +75,12 @@ class ChecklistController extends Controller
     /**
      * Display the specified resource.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Contracts\View\View
      */
-    public function show(string $slug): View
+    public function show(string $id): View
     {
-        $checklist  = $this->checklists->show($slug);
+        $checklist  = $this->checklists->show($id);
 
         return view('checklists.show', [
             'checklist' => $checklist
@@ -89,12 +90,12 @@ class ChecklistController extends Controller
     /**
      * Show the form for editing the specified resource.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Contracts\View\View
      */
-    public function edit(string $slug): View
+    public function edit(string $id): View
     {
-        $checklist = $this->checklists->show($slug);
+        $checklist = $this->checklists->show($id);
         $categories = $this->categories->index();
 
         return view('checklists.edit', [
@@ -107,15 +108,15 @@ class ChecklistController extends Controller
      * Update the specified resource in storage.
      * 
      * @param  \App\Http\Requests\UpdateChecklistRequest  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateChecklistRequest $request, string $slug): RedirectResponse
+    public function update(UpdateChecklistRequest $request, string $id): RedirectResponse
     {
-        $updatedChecklist = $this->checklists->update($request, $slug);
+        $updatedChecklist = $this->checklists->update($request, $id);
 
         return redirect()->route('checklists.show', [
-            'slug' => $updatedChecklist->slug
+            'id' => $updatedChecklist->id
         ])->with('status_message', 'The checklist has been update succesfully!');
     }
 

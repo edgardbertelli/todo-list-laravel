@@ -8,8 +8,6 @@ use App\Events\ChecklistDeleted;
 use App\Models\Category;
 use App\Models\Checklist;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use stdClass;
 
@@ -49,23 +47,21 @@ class ChecklistRepository implements ChecklistContract
             'category_id' => $validated['category']
         ]);
 
-        ChecklistCreated::dispatch($checklist);
-
         return $checklist;
     }
 
     /**
      * Returns a checklist.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return stdClass
      */
-    public function show(string $slug): Checklist
+    public function show(string $id): Checklist
     {
         $checklist =  $this->checklists::addSelect([
             'user' => $this->categories::select('user_id')
                                         ->whereColumn('category_id', 'categories.id'),
-        ])->get()->where('user', auth()->user()->id)->where('slug', $slug)->first();
+        ])->get()->where('user', auth()->user()->id)->where('id', $id)->firstOrFail();
 
         return $checklist;
     }
@@ -74,20 +70,20 @@ class ChecklistRepository implements ChecklistContract
      * Updates a checklist.
      * 
      * @param  array  $validated
-     * @param  string  $slug
+     * @param  string  $id
      * @return stdClass
      */
-    public function update(array $validated, string $slug): Checklist
+    public function update(array $validated, string $id): Checklist
     {
-        $category = $this->show($slug);
+        $checklist = $this->show($id);
 
-        $category->update([
+        $checklist->update([
             'name' => $validated['name'],
             'slug' => Str::slug($validated['name']),
             'category_id' => $validated['category']
         ]);
 
-        return $category->refresh();
+        return $checklist->refresh();
     }
 
     /**
@@ -95,16 +91,14 @@ class ChecklistRepository implements ChecklistContract
      * 
      * @todo   Implement the removal of a checklist.
      * @todo   Implement the dispatch of a task removal (event log).
-     * @param  string  $slug
+     * @param  string  $id
      * @return bool
      */
-    public function destroy(string $slug): bool
+    public function destroy(string $id): bool
     {
-        $checklist = $this->show($slug);
+        $checklist = $this->show($id);
 
         $checklist->delete();
-
-        ChecklistDeleted::dispatch($checklist);
 
         return true;
     }

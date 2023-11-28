@@ -12,16 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('slug');
-            $table->unsignedBigInteger('checklist_id');
+            $table->foreignUuid('checklist_id');
             $table->timestamps();
-        });
-
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->foreign('checklist_id')->references('id')->on('checklists');
+            $table->softDeletes();
         });
     }
 

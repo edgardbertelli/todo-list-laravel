@@ -3,9 +3,10 @@
 return [
     'header' => 'Categorias',
     'create_category_button' => 'Criar categoria',
+    'category_trash_button' => 'Lixeira',
     'create_form_input_label_name' => 'Nome',
     'create_form_submit_button' => 'Criar',
-    'create_form_back_button' => 'Voltar',
+    'back_button' => 'Voltar',
     'show_page_name' => 'Nome',
     'show_page_created_at' => 'Criado em',
     'show_page_updated_at' => 'Atualizado em',

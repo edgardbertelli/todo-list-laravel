@@ -17,12 +17,12 @@
                     <p><strong>{{ __('checklists.show_page_created_at') }}: </strong>{{ $checklist->created_at }}</p>
                     <p><strong>{{ __('checklists.show_page_updated_at') }}: </strong>{{ $checklist->updated_at }}</p>
                 </div>
-                <a href="{{ route('checklists.edit', $checklist->slug) }}">
+                <a href="{{ route('checklists.edit', $checklist->id) }}">
                     <x-primary-button>
                         {{ __('checklists.show_page_edit_button') }}
                     </x-primary-button>
                 </a>
-                <x-forms.form action="{{ route('checklists.destroy', $checklist->slug) }}" method="POST">
+                <x-forms.form action="{{ route('checklists.destroy', $checklist->id) }}" method="POST">
                     @method('DELETE')
                     <x-danger-button>
                         {{ __('checklists.show_page_remove_button') }}

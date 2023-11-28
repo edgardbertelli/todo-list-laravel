@@ -5,22 +5,10 @@
     @section('title', 'Categories')
 
     <x-container>
-        
-        @if (session('status_message'))
-            <x-alert class="bg-green-200 mb-6">
-                {{ session('status_message') }}
-            </x-alert>
-        @endif
 
-        <x-link href="{{ route('categories.create') }}">
-            <x-primary-button type="button">
-                {{ __('categories.create_category_button') }}
-            </x-primary-button>
-        </x-link>
-
-        <x-link href="{{ route('categories.trash.index') }}">
+        <x-link href="{{ route('categories.index') }}">
             <x-secondary-button type="button">
-                {{ __('categories.category_trash_button') }}
+                {{ __('categories.back_button') }}
             </x-secondary-button>
         </x-link>
 

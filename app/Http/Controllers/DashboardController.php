@@ -14,6 +14,7 @@ class DashboardController extends Controller
         private ChecklistService $checklists,
         private TaskService $tasks
     ) {
+        $this->middleware('auth');
         $this->middleware('localized');
     }
 

@@ -35,67 +35,65 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
-    /**
-     * The categories routes.
-     */
-    Route::controller(CategoryController::class)
-          ->prefix('/categories')
-          ->name('categories.')
-          ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/','store')->name('store');
-                Route::get('/{id}', 'show')->name('show');
-                Route::get('/{id}/edit', 'edit')->name('edit');
-                Route::put('/{id}', 'update')->name('update');
-                Route::delete('/{id}', 'destroy')->name('destroy');
-    });
-    
-    /**
-     * The checklists routes.
-     */
-    Route::controller(ChecklistController::class)
-          ->prefix('/checklists')
-          ->name('checklists.')
-          ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::get('/{slug}', 'show')->name('show');
-                Route::get('/{slug}/edit', 'edit')->name('edit');
-                Route::put('/{slug}', 'update')->name('update');
-                Route::delete('/{slug}', 'destroy')->name('destroy');
-    });
-    
-    /**
-     * The tasks routes.
-     */
-    Route::controller(TaskController::class)
-          ->prefix('/tasks')
-          ->name('tasks.')
-          ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::get('/{slug}', 'show')->name('show');
-                Route::get('/{slug}/edit', 'edit')->name('edit');
-                Route::put('/{slug}', 'update')->name('update');
-                Route::delete('/{slug}', 'destroy')->name('destroy');
-    });
 
-    /**
-     * The reports routes.
-     */
-    Route::get('/reports', [ReportController::class, 'make'])->name('reports.make');
-
-    /**
-     * The settings routes.
-     */
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-
-    Route::get('/locales/{locale}/set', [LocaleController::class, 'set'])->name('locales.set');
+Route::controller(CategoryController::class)
+      ->prefix('/categories')
+      ->name('categories.')
+      ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/trash', 'trash_index')->name('trash.index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/','store')->name('store');
+            Route::get('/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
 });
+
+/**
+ * The checklists routes.
+ */
+Route::controller(ChecklistController::class)
+      ->prefix('/checklists')
+      ->name('checklists.')
+      ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+});
+
+/**
+ * The tasks routes.
+ */
+Route::controller(TaskController::class)
+      ->prefix('/tasks')
+      ->name('tasks.')
+      ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+});
+
+/**
+ * The reports routes.
+ */
+Route::get('/reports', [ReportController::class, 'make'])->name('reports.make');
+
+/**
+ * The settings routes.
+ */
+Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+
+Route::get('/locales/{locale}/set', [LocaleController::class, 'set'])->name('locales.set');
+
 
 
 require __DIR__ . '/auth.php';

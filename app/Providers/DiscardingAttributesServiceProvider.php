@@ -22,9 +22,9 @@ class DiscardingAttributesServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Category::preventsSilentlyDiscardingAttributes(! $this->app->isProduction());
-        Category::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
-        Checklist::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
-        Task::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
+        Category::preventsSilentlyDiscardingAttributes($this->app->isLocal());
+        Category::preventSilentlyDiscardingAttributes($this->app->isLocal());
+        Checklist::preventSilentlyDiscardingAttributes($this->app->isLocal());
+        Task::preventSilentlyDiscardingAttributes($this->app->isLocal());
     }
 }

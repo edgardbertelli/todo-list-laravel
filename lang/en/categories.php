@@ -3,9 +3,10 @@
 return [
     'header' => 'Categories',
     'create_category_button' => 'Create category',
+    'category_trash_button' => 'Trash',
     'create_form_input_label_name' => 'Name',
     'create_form_submit_button' => 'Create',
-    'create_form_back_button' => 'Back',
+    'back_button' => 'Back',
     'show_page_name' => 'Name',
     'show_page_created_at' => 'Created at',
     'show_page_updated_at' => 'Updated at',

@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Models\Checklist;
 use App\Models\User;
 use App\Services\CategoryService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +22,7 @@ class CategoryController extends Controller
     public function __construct(
         private CategoryService $categories
     ) {
+        $this->middleware('auth');
         $this->middleware('localized')->except(['store', 'update', 'destroy']);
     }
 
@@ -42,6 +41,20 @@ class CategoryController extends Controller
         // $categories = $this->categories->index();
 
         return view('categories.index', [
+            'categories' => $categories
+        ]);
+    }
+
+    /**
+     * Returns a page with a list of the categories trashed registers.
+     * 
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function trash_index(): View
+    {
+        $categories = $this->categories->trash_index();
+
+        return view('categories.trash.index', [
             'categories' => $categories
         ]);
     }

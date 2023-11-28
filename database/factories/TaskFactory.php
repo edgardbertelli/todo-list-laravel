@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Checklist;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->text(25),
+            'slug' => fake()->unique()->slug(),
+            'description' => fake()->text(),
+            'checklist_id' => Checklist::all()->random()
         ];
     }
 }

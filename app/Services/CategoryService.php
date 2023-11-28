@@ -30,6 +30,16 @@ class CategoryService
     }
 
     /**
+     * Returns a list of all the categories trashed registers.
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function trash_index(): Collection
+    {
+        return $this->categories->trash_index();
+    }
+
+    /**
      * Creates a new category.
      * 
      * @param  \App\Http\Requests\StoreCategoryRequest  $request

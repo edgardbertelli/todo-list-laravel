@@ -27,7 +27,7 @@
         @endif
         <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-6">
             @foreach ($checklists as $checklist)
-                <x-link href="{{ route('checklists.show', $checklist->slug) }}">
+                <x-link href="{{ route('checklists.show', $checklist->id) }}">
                     <x-card title="{{ $checklist->name }}">
                         {{ $checklist->name }}
                     </x-card>

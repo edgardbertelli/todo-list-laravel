@@ -47,36 +47,36 @@ class TaskService
     /**
      * Returns a task.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return stdClass
      */
-    public function show(string $slug): stdClass
+    public function show(string $id): stdClass
     {
-        return $this->tasks->show($slug);
+        return $this->tasks->show($id);
     }
 
     /**
      * Updates a task.
      * 
      * @param  \App\Http\Requests\UpdateTaskRequest  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return stdClass
      */
-    public function update(UpdateTaskRequest $request, string $slug): stdClass
+    public function update(UpdateTaskRequest $request, string $id): stdClass
     {
         $validated = $request->safe()->only(['title', 'description', 'checklist_id']);
 
-        return $this->tasks->update($validated, $slug);
+        return $this->tasks->update($validated, $id);
     }
 
     /**
      * Removes a task.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return bool
      */
-    public function destroy(string $slug): bool
+    public function destroy(string $id): bool
     {
-        return $this->tasks->destroy($slug);
+        return $this->tasks->destroy($id);
     }
 }

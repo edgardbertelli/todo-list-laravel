@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('checklists', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name', 20);
             $table->string('slug');
             $table->foreignUuid('category_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

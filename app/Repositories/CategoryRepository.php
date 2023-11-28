@@ -3,11 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\CategoryContract;
-use App\Events\CategoryCreated;
-use App\Events\CategoryDeleted;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class CategoryRepository implements CategoryContract
@@ -28,8 +25,21 @@ class CategoryRepository implements CategoryContract
      */
     public function index(): Collection
     {
-        $categories = $this->categories::where('user_id', Auth::user()->id)->get();
+        $categories = auth()->user()->categories;
 
+        return $categories;
+    }
+
+    /**
+     * Returns the categories trashed registers.
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function trash_index(): Collection
+    {
+        $categories = $this->categories::onlyTrashed()
+                                        ->where('user_id', auth()->user()->id)
+                                        ->get();
         return $categories;
     }
 
@@ -42,13 +52,11 @@ class CategoryRepository implements CategoryContract
     public function store(array $validated): Category
     {
         $category = $this->categories->create([
-            'name'       => $validated['name'],
-            'slug'       => Str::slug($validated['name']),
-            'user_id'    => Auth::user()->id
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'user_id' => auth()->user()->id
         ]);
 
-        CategoryCreated::dispatch($category);
-        
         return $category;
     }
 
@@ -60,9 +68,9 @@ class CategoryRepository implements CategoryContract
      */
     public function show(string $id): Category
     {
-        return $this->categories::where('id', $id)
-                                ->where('user_id', Auth::user()->id)
-                                ->first();
+        $category = $this->categories::findOrFail($id);
+
+        return $category;
     }
 
     /**
@@ -74,12 +82,14 @@ class CategoryRepository implements CategoryContract
      */
     public function update(array $validated, string $id): Category
     {
-        $category = $this->categories::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $category = $this->categories::findOrFail($id);
 
-        $category->update([
-            'name' => $validated['name'],
-            'slug' => Str::slug($validated['name'])
-        ]);
+        $category->name = $validated['name'];
+
+        if ($category->isDirty('name')) {
+            $category->slug = Str::slug($validated['name']);
+            $category->save();
+        }
 
         return $category->refresh();
     }
@@ -89,16 +99,10 @@ class CategoryRepository implements CategoryContract
      * 
      * @param string $id
      */
-    public function destroy(string $id)
+    public function destroy(string $id): bool
     {
-        $category = $this->categories::where('id', $id)
-                                     ->where('user_id', Auth::user()->id)
-                                     ->first();
+        $category = $this->categories::findOrFail($id);
 
-        $categoryDeleted =  $category->delete();
-
-        CategoryDeleted::dispatch($category);
-
-        return $categoryDeleted;
+        return $category->delete();
     }
 }
