@@ -35,7 +35,7 @@ class CategoryRepository implements CategoryContract
      * 
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function trash_index(): Collection
+    public function trash(): Collection
     {
         $categories = $this->categories::onlyTrashed()
                                         ->where('user_id', auth()->user()->id)
@@ -104,5 +104,29 @@ class CategoryRepository implements CategoryContract
         $category = $this->categories::findOrFail($id);
 
         return $category->delete();
+    }
+
+    /**
+     * restores a category.
+     * 
+     * @param  string  $id
+     */
+    public function restore(string $id)
+    {
+        $category = $this->categories::onlyTrashed()->find($id);
+
+        return $category->restore();
+    }
+
+    /**
+     * Removes a category permanently.
+     * 
+     * @param  string  $id
+     */
+    public function force(string $id)
+    {
+        $category = $this->categories::onlyTrashed()->find($id);
+
+        return $category->forceDelete();
     }
 }

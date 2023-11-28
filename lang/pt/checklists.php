@@ -3,6 +3,10 @@
 return [
     'header' => 'Checklists',
     'create_checklist_button' => 'Criar checklist',
+    'trash_button' => 'Lixeira',
+    'trash_restore_button' => 'Recuperar',
+    'delete_confirm_message' => 'Você tem certeza de que quer remover este checklist?',
+    'back_button' => 'Voltar',
     'create_form_input_label_name' => 'Nome',
     'create_form_input_label_category' => 'Categoria',
     'create_form_submit_button' => 'Criar',

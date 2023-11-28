@@ -3,6 +3,9 @@
 return [
     'header' => 'Tarefas',
     'create_task_button' => 'Criar tarefa',
+    'trash_button' => 'Lixeira',
+    'back_button' => 'Voltar',
+    'delete_confirm_message' => 'Você tem certeza de que quer remover esta tarefa?',
     'create_form_input_label_title' => 'Título',
     'create_form_input_label_description' => 'Descrição',
     'create_form_input_label_checklist' => 'Checklist',

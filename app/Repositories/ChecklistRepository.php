@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Contracts\ChecklistContract;
-use App\Events\ChecklistCreated;
-use App\Events\ChecklistDeleted;
 use App\Models\Category;
 use App\Models\Checklist;
 use Illuminate\Support\Collection;
@@ -31,6 +29,32 @@ class ChecklistRepository implements ChecklistContract
         ])->get()->where('user', auth()->user()->id);
 
         return $checklists;
+    }
+
+    /**
+     * Lists all the trashed checklists.
+     */
+    public function trash()
+    {
+        return $this->checklists::onlyTrashed()->addSelect([
+            'user' => $this->categories::select('user_id')
+                                        ->whereColumn('category_id', 'categories.id'),
+        ])->get()->where('user', auth()->user()->id);
+    }
+
+    /**
+     * Restores a checklist.
+     * 
+     * @param  string  $id
+     */
+    public function restore(string $id)
+    {
+        $checklist =  $this->checklists::onlyTrashed()->addSelect([
+            'user' => $this->categories::select('user_id')
+                                        ->whereColumn('category_id', 'categories.id'),
+        ])->get()->where('user', auth()->user()->id)->where('id', $id)->firstOrFail();
+
+        return $checklist->restore();
     }
 
     /**
@@ -101,5 +125,21 @@ class ChecklistRepository implements ChecklistContract
         $checklist->delete();
 
         return true;
+    }
+
+    /**
+     * Removes a checklist permanently.
+     * 
+     * @param  string  $id
+     * @return bool
+     */
+    public function force(string $id): bool
+    {
+        $checklist =  $this->checklists::onlyTrashed()->addSelect([
+            'user' => $this->categories::select('user_id')
+                                        ->whereColumn('category_id', 'categories.id'),
+        ])->get()->where('user', auth()->user()->id)->where('id', $id)->firstOrFail();
+
+        return $checklist->forceDelete();
     }
 }

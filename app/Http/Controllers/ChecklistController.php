@@ -45,6 +45,33 @@ class ChecklistController extends Controller
     }
 
     /**
+     * Return all the trashed checklists.
+     * 
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function trash()
+    {
+        $checklists = $this->checklists->trash();
+
+        return view('checklists.trash', [
+            'checklists' => $checklists
+        ]);
+    }
+
+    /**
+     * Restore a checklist.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(string $id): RedirectResponse
+    {
+        $this->checklists->restore($id);
+
+        return redirect()->route('checklists.trash');
+    }
+
+    /**
      * Show the form for creating a new resource.
      * 
      * @return \Illuminate\Contracts\View\View
@@ -121,6 +148,21 @@ class ChecklistController extends Controller
     }
 
     /**
+     * Returns a view to confirm the removal of a checklist.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function delete(string $id): View
+    {
+        $checklist = $this->checklists->show($id);
+
+        return view('checklists.delete', [
+            'checklist' => $checklist
+        ]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      * 
      * @param  string  $slug
@@ -132,5 +174,18 @@ class ChecklistController extends Controller
 
         return redirect()->route('checklists.index')
                          ->with('status_message', 'The checklist has been removed succesfully!');
+    }
+
+    /**
+     * Removes a checklist permanently.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function force(string $id): RedirectResponse
+    {
+        $this->checklists->force($id);
+
+        return redirect()->route('checklists.trash');
     }
 }

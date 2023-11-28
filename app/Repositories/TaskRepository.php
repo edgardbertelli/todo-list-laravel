@@ -27,7 +27,17 @@ class TaskRepository implements TaskContract
      */
     public function index(): Collection
     {
-        return auth()->user()->categories->checklists->tasks;
+        return $this->tasks::all();
+    }
+
+    /**
+     * Lists all the trashed tasks.
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function trash(): Collection
+    {
+        return $this->tasks::onlyTrashed()->get();
     }
 
     /**
@@ -53,73 +63,73 @@ class TaskRepository implements TaskContract
     /**
      * Returns a task.
      * 
-     * @param  string  $slug
-     * @return stdClass
+     * @param  string  $id
+     * @return Task
      */
-    public function show(string $slug): stdClass
+    public function show(string $id): Task
     {
-        return DB::table('tasks')
-                  ->join('checklists', 'tasks.checklist_id', '=', 'checklists.id')
-                  ->join('categories', 'checklists.category_id', '=', 'categories.id')
-                  ->join('users', 'categories.user_id', '=', 'users.id')
-                  ->select(['tasks.*', 'categories.name as category_name', 'checklists.name as checklist_name'])
-                  ->where('tasks.slug', $slug)
-                  ->where('checklists.category_id', Auth::user()->id)
-                  ->first();
+        $task = $this->tasks::find($id);
+
+        return $task;
     }
 
     /**
      * Updates a task.
      * 
      * @param  array  $validated
-     * @param  string  $slug
-     * @return stdClass
+     * @param  string  $id
+     * @return Task
      */
-    public function update(array $validated, string $slug): stdClass
+    public function update(array $validated, string $id): Task
     {
-        DB::table('tasks')
-           ->join('checklists', 'tasks.checklist_id', '=', 'checklists.id')
-           ->join('categories', 'checklists.category_id', '=', 'categories.id')
-           ->join('users', 'categories.user_id', '=', 'users.id')
-           ->where('tasks.slug', $slug)
-           ->where('categories.user_id', Auth::user()->id)
-           ->update([
-                'tasks.title'        => $validated['title'],
-                'tasks.slug'         => Str::slug($validated['title']),
-                'tasks.description'  => $validated['description'],
-                'tasks.checklist_id' => $validated['checklist_id'],
-                'tasks.updated_at'   => now()
-           ]);
+        $task = $this->tasks::findOrFail($id);
 
-        $task = DB::table('tasks')
-                   ->join('checklists', 'tasks.checklist_id', '=', 'checklists.id')
-                   ->join('categories', 'checklists.category_id', '=', 'categories.id')
-                   ->join('users', 'categories.user_id', '=', 'users.id')
-                   ->select(['tasks.*', 'categories.name as category_name', 'checklists.name as checklist_name'])
-                   ->where('tasks.slug', Str::slug($validated['title']))
-                   ->where('categories.user_id', Auth::user()->id)
-                   ->first();
+        $task->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'slug' => Str::slug($validated['title']),
+            'checklist_id' => $validated['checklist_id']
+        ]);
 
-        return $task;
+        return $task->refresh();
+    }
+
+    /**
+     * Restores a task.
+     * 
+     * @param  string  $id
+     * @return bool
+     */
+    public function restore(string $id): bool
+    {
+        $task = $this->tasks::onlyTrashed()->findOrFail($id);
+
+        return $task->restore();
     }
 
     /**
      * Removes a task.
      * 
-     * @param  string  $slug
+     * @param  string  $id
      * @return bool
      */
-    public function destroy(string $slug): bool
+    public function destroy(string $id): bool
     {
-        $task = DB::table('tasks')
-                   ->join('checklists', 'tasks.checklist_id', '=', 'checklists.id')
-                   ->join('categories', 'checklists.category_id', '=', 'categories.id')
-                   ->join('users', 'categories.user_id', '=', 'users.id')
-                   ->select(['tasks.*', 'categories.name as category_name', 'checklists.name as checklist_name'])
-                   ->where('tasks.slug', $slug)
-                   ->where('categories.user_id', Auth::user()->id)
-                   ->delete();
-        
-        return $task;
+        $task = $this->tasks->findOrFail($id);
+
+        return $task->delete();
+    }
+
+    /**
+     * Forces the removal of a task.
+     * 
+     * @param  string  $id
+     * @return bool
+     */
+    public function force(string $id): bool
+    {
+        $task = $this->tasks::onlyTrashed()->findOrFail($id);
+
+        return $task->forceDelete();
     }
 }

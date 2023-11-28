@@ -38,8 +38,6 @@ class CategoryController extends Controller
                         ->whereColumn('user_id', 'users.id')
         ])->where('user_id', $userId)->get();
 
-        // $categories = $this->categories->index();
-
         return view('categories.index', [
             'categories' => $categories
         ]);
@@ -50,13 +48,41 @@ class CategoryController extends Controller
      * 
      * @return \Illuminate\Contracts\View\View
      */
-    public function trash_index(): View
+    public function trash(): View
     {
-        $categories = $this->categories->trash_index();
+        $categories = $this->categories->trash();
 
-        return view('categories.trash.index', [
+        return view('categories.trash', [
             'categories' => $categories
         ]);
+    }
+
+    /**
+     * Returns a page to confirm the removal of a category.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function delete(string $id): View
+    {
+        $category = $this->categories->show($id);
+
+        return view('categories.delete', [
+            'category' => $category
+        ]);
+    }
+
+    /**
+     * Removes a category permanently.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function force(string $id): RedirectResponse
+    {
+        $this->categories->force($id);
+
+        return redirect()->route('categories.trash');
     }
 
     /**
@@ -138,5 +164,17 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')
                          ->with('status_message', 'The category has been deleted succesfully.');
+    }
+
+    /**
+     * restores a category.
+     * 
+     * @param  string  $id
+     */
+    public function restore(string $id): RedirectResponse
+    {
+        $this->categories->restore($id);
+
+        return redirect()->route('categories.index');
     }
 }

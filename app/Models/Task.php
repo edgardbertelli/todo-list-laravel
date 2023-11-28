@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\TaskCreated;
-use App\Events\TaskDeleted;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,17 +16,7 @@ class Task extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'checklist_id'];
-
-    /**
-     * The event map for the model.
-     * 
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'created' => TaskCreated::class,
-        'deleted' => TaskDeleted::class,
-    ];
+    protected $fillable = ['title', 'description', 'slug', 'checklist_id'];
 
     /**
      * Get the checklist that owns the Task

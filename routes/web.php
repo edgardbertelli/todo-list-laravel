@@ -41,13 +41,16 @@ Route::controller(CategoryController::class)
       ->name('categories.')
       ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/trash', 'trash_index')->name('trash.index');
+            Route::get('/trash', 'trash')->name('trash');
             Route::get('/create', 'create')->name('create');
             Route::post('/','store')->name('store');
+            Route::get('/{id}/delete', 'delete')->name('delete');
             Route::get('/{id}', 'show')->name('show');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('update');
+            Route::put('/{id}/restore', 'restore')->name('restore');
             Route::delete('/{id}', 'destroy')->name('destroy');
+            Route::delete('/{id}/force', 'force')->name('force');
 });
 
 /**
@@ -58,12 +61,16 @@ Route::controller(ChecklistController::class)
       ->name('checklists.')
       ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/trash', 'trash')->name('trash');
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
             Route::get('/{id}', 'show')->name('show');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('update');
+            Route::put('/{id}/restore', 'restore')->name('restore');
+            Route::get('/{id}/delete', 'delete')->name('delete');
             Route::delete('/{id}', 'destroy')->name('destroy');
+            Route::delete('/{id}/force', 'force')->name('force');
 });
 
 /**
@@ -74,12 +81,16 @@ Route::controller(TaskController::class)
       ->name('tasks.')
       ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/trash', 'trash')->name('trash');
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
             Route::get('/{id}', 'show')->name('show');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('update');
+            Route::put('/{id}/restore', 'restore')->name('restore');
+            Route::get('/{id}/delete', 'delete')->name('delete');
             Route::delete('/{id}', 'destroy')->name('destroy');
+            Route::delete('/{id}/force', 'force')->name('force');
 });
 
 /**

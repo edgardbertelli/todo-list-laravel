@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Events\ChecklistCreated;
-use App\Events\ChecklistDeleted;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,16 +17,6 @@ class Checklist extends Model
      * @var array
      */
     protected $fillable = ['name', 'slug', 'category_id'];
-
-    /**
-     * The event map for the model.
-     * 
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'created' => ChecklistCreated::class,
-        'deleted' => ChecklistDeleted::class,
-    ];
 
     /**
      * Get the category that owns the Checklist

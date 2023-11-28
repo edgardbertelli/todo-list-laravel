@@ -32,6 +32,24 @@ class ChecklistService
     }
 
     /**
+     * Returns all the trashed checklists.
+     */
+    public function trash()
+    {
+        return $this->checklists->trash();
+    }
+
+    /**
+     * Restores a checklist.
+     * 
+     * @param  string  $id
+     */
+    public function restore(string $id)
+    {
+        return $this->checklists->restore($id);
+    }
+
+    /**
      * Creates a new checklsist.
      * 
      * @param \App\Http\Requests\StoreChecklistRequest $request
@@ -78,5 +96,16 @@ class ChecklistService
     public function destroy(string $id): bool
     {
         return $this->checklists->destroy($id);
+    }
+
+    /**
+     * Removes a checklist permanently.
+     * 
+     * @param  string  $id
+     * @return bool
+     */
+    public function force(string $id): bool
+    {
+        return $this->checklists->force($id);
     }
 }

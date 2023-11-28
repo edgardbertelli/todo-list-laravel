@@ -35,9 +35,21 @@ class TaskController extends Controller
     {
         $tasks = $this->tasks->index();
 
-        $tasks->dd();
-
         return view('tasks.index', [
+            'tasks' => $tasks
+        ]);
+    }
+
+    /**
+     * Lists all the trashed tasks.
+     * 
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function trash(): View
+    {
+        $tasks = $this->tasks->trash();
+
+        return view('tasks.trash', [
             'tasks' => $tasks
         ]);
     }
@@ -119,6 +131,34 @@ class TaskController extends Controller
     }
 
     /**
+     * Return view to confirm the removal of a task.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function delete(string $id)
+    {
+        $task = $this->tasks->show($id);
+
+        return view('tasks.delete', [
+            'task' => $task
+        ]);
+    }
+
+    /**
+     * Restore a task.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(string $id): RedirectResponse
+    {
+        $this->tasks->restore($id);
+
+        return redirect()->route('tasks.trash');
+    }
+
+    /**
      * Remove the specified resource from storage.
      * 
      * @param  string  $id
@@ -130,5 +170,18 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')
                          ->with('status_message', 'The task has been removed succesfully!');
+    }
+
+    /**
+     * Forces the removal of a task.
+     * 
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function force(string $id): RedirectResponse
+    {
+        $this->tasks->force($id);
+
+        return redirect()->route('tasks.trash');
     }
 }

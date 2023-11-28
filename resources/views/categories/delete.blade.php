@@ -13,7 +13,7 @@
             @endif
 
             <div class="mb-4">
-                <x-link href="{{ route('categories.index') }}">
+                <x-link href="{{ route('categories.show', $category->id) }}">
                     <x-secondary-button>
                         {{ __('categories.back_button') }}
                     </x-secondary-button>
@@ -28,22 +28,15 @@
                         <p><strong>{{ __('categories.show_page_updated_at') }}: </strong>{{ $category->updated_at }}</p>
                     </div>
 
-                    <div class="flex justify-between">
-                        <div>
-                            <a href="{{ route('categories.edit', $category->id) }}">
-                                <x-primary-button>
-                                    {{ __('categories.show_page_edit_button') }}
-                                </x-primary-button>
-                            </a>
-                        </div>
-    
-                        <div>
-                            <x-link href="{{ route('categories.delete', $category->id) }}">
-                                <x-danger-button>
-                                    {{ __('categories.show_page_remove_button') }}
-                                </x-danger-button>
-                            </x-link>
-                        </div>
+                    <p class="mb-6">{{ __('categories.delete_confirm_message') }}</p>
+                    
+                    <div>
+                        <x-forms.form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                            @method('DELETE')
+                            <x-danger-button type="submit">
+                                {{ __('categories.show_page_remove_button') }}
+                            </x-danger-button>
+                        </x-forms.form>
                     </div>
                 </div>
             </x-card>

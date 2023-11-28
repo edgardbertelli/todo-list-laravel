@@ -34,9 +34,9 @@ class CategoryService
      * 
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function trash_index(): Collection
+    public function trash(): Collection
     {
-        return $this->categories->trash_index();
+        return $this->categories->trash();
     }
 
     /**
@@ -86,5 +86,25 @@ class CategoryService
     public function destroy(string $id): bool
     {
         return $this->categories->destroy($id);
+    }
+
+    /**
+     * Removes a category permanently.
+     * 
+     * @param  string  $id
+     */
+    public function force(string $id)
+    {
+        return $this->categories->force($id);
+    }
+
+    /**
+     * restores a category.
+     * 
+     * @param  string  $id
+     */
+    public function restore(string $id)
+    {
+        return $this->categories->restore($id);
     }
 }

@@ -3,6 +3,9 @@
 return [
     'header' => 'Tasks',
     'create_task_button' => 'Create task',
+    'trash_button' => 'Trash',
+    'back_button' => 'Back',
+    'delete_confirm_message' => 'Are your sure you want to remove this task?',
     'create_form_input_label_title' => 'Title',
     'create_form_input_label_description' => 'Description',
     'create_form_input_label_checklist' => 'Checklist',

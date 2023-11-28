@@ -5,9 +5,8 @@ namespace App\Services;
 use App\Contracts\TaskContract;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use stdClass;
+use App\Models\Task;
+use Illuminate\Database\Eloquent\Collection;
 
 class TaskService
 {
@@ -32,6 +31,16 @@ class TaskService
     }
 
     /**
+     * Lists all the trashed tasks.
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function trash(): Collection
+    {
+        return $this->tasks->trash();
+    }
+
+    /**
      * Creates a new task.
      * 
      * @param  \App\Http\Requests\StoreTaskRequest  $request
@@ -48,9 +57,9 @@ class TaskService
      * Returns a task.
      * 
      * @param  string  $id
-     * @return stdClass
+     * @return Task
      */
-    public function show(string $id): stdClass
+    public function show(string $id): Task
     {
         return $this->tasks->show($id);
     }
@@ -60,13 +69,24 @@ class TaskService
      * 
      * @param  \App\Http\Requests\UpdateTaskRequest  $request
      * @param  string  $id
-     * @return stdClass
+     * @return Task
      */
-    public function update(UpdateTaskRequest $request, string $id): stdClass
+    public function update(UpdateTaskRequest $request, string $id): Task
     {
         $validated = $request->safe()->only(['title', 'description', 'checklist_id']);
 
         return $this->tasks->update($validated, $id);
+    }
+
+    /**
+     * Restores a task.
+     * 
+     * @param  string  $id
+     * @return bool
+     */
+    public function restore(string $id): bool
+    {
+        return $this->tasks->restore($id);
     }
 
     /**
@@ -78,5 +98,16 @@ class TaskService
     public function destroy(string $id): bool
     {
         return $this->tasks->destroy($id);
+    }
+
+    /**
+     * Forces the removal of a task.
+     * 
+     * @param  string  $id
+     * @return bool
+     */
+    public function force(string $id): bool
+    {
+        return $this->tasks->force($id);
     }
 }
