@@ -19,7 +19,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'user_id'];
+    protected $fillable = ['name', 'description', 'user_id', 'team_id'];
 
     /**
      * Get the user that owns the project

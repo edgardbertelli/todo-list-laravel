@@ -34,7 +34,7 @@
                 @foreach ($teams as $team)
                     <x-card>
                         <div class="text-lg mb-4">
-                            <x-link href="{{ route('teams.show', $team->id) }}" title="{{ $team->name }}">
+                            <x-link href="{{ route('teams.show', ['id' => $team->id]) }}" title="{{ $team->name }}">
                                 <p><strong>{{ $team->name }}</strong></p>
                             </x-link>
                         </div>

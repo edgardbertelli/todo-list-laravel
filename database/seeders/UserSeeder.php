@@ -33,7 +33,5 @@ class UserSeeder extends Seeder
                 'email' => 'birapereira@gmail.com',
                 'username' => 'birapereira'
         ]);
-
-        User::factory(97)->create();
     }
 }

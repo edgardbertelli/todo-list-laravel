@@ -6,6 +6,8 @@ return [
     'add_member_button' => 'Novo membro',
     'delete_confirm_message' => 'Você tem certeza de que deseja remover este team?',
     'create_form_input_label_name' => 'Nome',
+    'create_form_input_label_description' => 'Descrição',
+    'create_form_input_label_team' => 'Team',
     'create_form_submit_button' => 'Criar',
     'back_button' => 'Voltar',
     'show_page_name' => 'Nome',

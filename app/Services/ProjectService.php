@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Contracts\projectContract;
-use App\Http\Requests\StoreprojectRequest;
-use App\Http\Requests\UpdateprojectRequest;
-use App\Models\project;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProjectService
@@ -45,9 +45,9 @@ class ProjectService
      * @param  \App\Http\Requests\StoreprojectRequest  $request
      * @return \App\Models\project
      */
-    public function store(StoreprojectRequest $request): project
+    public function store(StoreProjectRequest $request): project
     {
-        $validated = $request->safe()->only(['name']);
+        $validated = $request->safe()->only(['name', 'description', 'team']);
     
         return $this->projects->store($validated);
     }
@@ -70,7 +70,7 @@ class ProjectService
      * @param  string  $id
      * @return \App\Models\project
      */
-    public function update(UpdateprojectRequest $request, string $id): project
+    public function update(UpdateProjectRequest $request, string $id): project
     {
         $validated = $request->safe()->only(['name']);
 

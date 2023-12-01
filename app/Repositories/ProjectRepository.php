@@ -52,7 +52,8 @@ class ProjectRepository implements ProjectContract
     {
         $project = $this->projects->create([
             'name' => $validated['name'],
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+            'team_id' => $validated['team']
         ]);
 
         return $project;

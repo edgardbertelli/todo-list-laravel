@@ -8,6 +8,7 @@ return [
     'trash_restore_button' => 'restore',
     'delete_confirm_message' => 'Are you sure you want to remove this project?',
     'create_form_input_label_name' => 'Name',
+    'create_form_input_label_team' => 'Team',
     'create_form_submit_button' => 'Create',
     'back_button' => 'Back',
     'show_page_name' => 'Name',

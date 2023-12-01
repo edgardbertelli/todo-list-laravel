@@ -6,6 +6,7 @@ return [
     'add_member_button' => 'Add member',
     'delete_confirm_message' => 'Are you sure you want to remove this team?',
     'create_form_input_label_name' => 'Name',
+    'create_form_input_label_description' => 'Description',
     'create_form_submit_button' => 'Create',
     'back_button' => 'Back',
     'show_page_name' => 'Name',

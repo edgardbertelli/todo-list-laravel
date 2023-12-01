@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateprojectRequest;
 use App\Models\project;
 use App\Models\User;
 use App\Services\ProjectService;
+use App\Services\TeamService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\App;
@@ -20,7 +21,8 @@ class ProjectController extends Controller
      * @return void
      */
     public function __construct(
-        private ProjectService $projects
+        private ProjectService $projects,
+        private TeamService $teams,
     ) {
         $this->middleware('auth');
         $this->middleware('localized')->except(['store', 'update', 'destroy', 'force', 'restore']);
@@ -91,9 +93,11 @@ class ProjectController extends Controller
     public function create(): View
     {
         $projects = $this->projects->index();
+        $teams = $this->teams->index();
         
         return view('projects.create', [
-            'projects' => $projects
+            'projects' => $projects,
+            'teams' => $teams
         ]);
     }
 
