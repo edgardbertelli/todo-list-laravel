@@ -23,7 +23,7 @@ class UpdateChecklistRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'project' => ['required', 'string']
+            'project' => ['required', 'string', 'exists:projects,id']
         ];
     }
 }

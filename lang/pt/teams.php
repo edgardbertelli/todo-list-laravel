@@ -3,6 +3,7 @@
 return [
     'header' => 'Teams',
     'create_team_button' => 'Criar team',
+    'add_member_button' => 'Novo membro',
     'delete_confirm_message' => 'Você tem certeza de que deseja remover este team?',
     'create_form_input_label_name' => 'Nome',
     'create_form_submit_button' => 'Criar',

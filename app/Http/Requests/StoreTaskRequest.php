@@ -24,7 +24,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'description' => ['nullable', 'string'],
-            'checklist_id' => ['required', 'string']
+            'checklist_id' => ['required', 'string', 'exists:checklists,id']
         ];
     }
 }

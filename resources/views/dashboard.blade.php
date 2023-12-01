@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    @section('title', 'Dashboard')
+
     <x-container>
         {{-- Download report button --}}
         <div class="w-full columns-1 mb-6">

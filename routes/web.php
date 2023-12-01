@@ -94,7 +94,24 @@ Route::controller(TaskController::class)
             Route::delete('/{id}/force', 'force')->name('force');
 });
 
-Route::resource('teams', TeamController::class);
+/**
+ * The tasks routes.
+ */
+Route::controller(TeamController::class)
+      ->prefix('/teams')
+      ->name('teams.')
+      ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{id}/add', 'add')->name('add');
+            Route::post('/{id}/attach', 'attach')->name('attach');
+            Route::get('/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::get('/{id}/delete', 'delete')->name('delete');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+});
 
 /**
  * The reports routes.

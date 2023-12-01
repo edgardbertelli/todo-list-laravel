@@ -46,7 +46,7 @@
                             </p>
                         </div>
                         <div class="text-xs text-gray-400">
-                            <p>{{ __("Criado por {$team->user->username}") }}</p>
+                            <p>{{ __("Criado por {$team->created_by->name}") }}</p>
                         </div>
                     </x-card>
                 @endforeach

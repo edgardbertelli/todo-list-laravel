@@ -55,7 +55,7 @@
                                 </div>
                             @endisset
                             <div class="text-xs text-gray-400 mt-4">
-                                <p>{{ __("Criado por {$project->user->name}") }}</p>
+                                <p>{{ __("Criado por {$project->created_by->name}") }}</p>
                                 <p>{{ __("Desenvolvido por {$project->team->name}") }}</p>
                             </div>
                         </x-card>

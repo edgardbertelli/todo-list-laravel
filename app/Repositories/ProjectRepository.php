@@ -24,7 +24,7 @@ class ProjectRepository implements ProjectContract
      */
     public function index(): Collection
     {
-        $projects = $this->projects::whereBelongsTo(auth()->user())->get();
+        $projects = $this->projects::whereBelongsTo(auth()->user(), 'created_by')->get();
 
         return $projects;
     }
@@ -37,7 +37,7 @@ class ProjectRepository implements ProjectContract
     public function trash(): Collection
     {
         $projects = $this->projects::onlyTrashed()
-                                        ->whereBelongsTo(auth()->user())
+                                        ->whereBelongsTo(auth()->user(), 'created_by')
                                         ->get();
         return $projects;
     }
